@@ -7,6 +7,7 @@ import com.azuredoom.hyleveling.config.LevelFormulaFactory;
 import com.azuredoom.hyleveling.level.formulas.LevelFormula;
 import com.azuredoom.hyleveling.playerdata.PlayerLevelData;
 
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -192,7 +193,10 @@ public class JdbcLevelRepository implements LevelRepository {
             return;
         }
 
-        LevelFormula oldFormula = LevelFormulaFactory.formulaFromDescriptor(new FormulaDescriptor(oldType, oldParams));
+        var oldFormula = LevelFormulaFactory.formulaFromDescriptor(
+            new FormulaDescriptor(oldType, oldParams),
+            Paths.get("./data")
+        );
 
         var select = "SELECT player_id, xp FROM player_levels";
         var update = "UPDATE player_levels SET xp = ? WHERE player_id = ?";
