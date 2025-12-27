@@ -121,13 +121,12 @@ public class LevelServiceImpl implements LevelService {
     }
 
     /**
-     * Sets the level of the player associated with the given unique identifier (UUID). The method ensures
-     * that the specified level is at least the minimum allowed (1). If the level changes, appropriate
-     * listeners for level-up or level-down events are triggered.
+     * Sets the level of the player associated with the given unique identifier (UUID). The method ensures that the
+     * specified level is at least the minimum allowed (1). If the level changes, appropriate listeners for level-up or
+     * level-down events are triggered.
      *
      * @param playerId The unique identifier (UUID) of the player whose level is being set.
-     * @param level    The target level to set for the player. If the value provided is less than 1,
-     *                 it defaults to 1.
+     * @param level    The target level to set for the player. If the value provided is less than 1, it defaults to 1.
      * @return The new level of the player after the operation.
      */
     @Override
@@ -151,9 +150,9 @@ public class LevelServiceImpl implements LevelService {
     }
 
     /**
-     * Calculates the total experience points (XP) required to reach the specified level.
-     * If the level is less than or equal to 1, the XP required is 0. For higher levels,
-     * the calculation is delegated to the associated {@code LevelFormula}.
+     * Calculates the total experience points (XP) required to reach the specified level. If the level is less than or
+     * equal to 1, the XP required is 0. For higher levels, the calculation is delegated to the associated
+     * {@code LevelFormula}.
      *
      * @param level The target level for which the required XP is being calculated. Must be a positive integer.
      * @return The total XP required to reach the specified level. Returns 0 for level 1 or below.
@@ -247,12 +246,10 @@ public class LevelServiceImpl implements LevelService {
     }
 
     /**
-     * Registers a listener to be notified of events when a player levels up.
-     * When a player's level increases, the registered listener's {@code onLevelUp}
-     * method will be invoked.
+     * Registers a listener to be notified of events when a player levels up. When a player's level increases, the
+     * registered listener's {@code onLevelUp} method will be invoked.
      *
-     * @param listener The {@link LevelUpListener} to be registered for receiving
-     *                 notifications about level-up events.
+     * @param listener The {@link LevelUpListener} to be registered for receiving notifications about level-up events.
      */
     @Override
     public void registerLevelUpListener(LevelUpListener listener) {
@@ -282,7 +279,8 @@ public class LevelServiceImpl implements LevelService {
     }
 
     /**
-     * Updates the experience points (XP) of the specified player's level data and persists the changes to the repository.
+     * Updates the experience points (XP) of the specified player's level data and persists the changes to the
+     * repository.
      *
      * @param data The {@link PlayerLevelData} object representing the player's level and experience data to be updated.
      * @param xp   The new experience points (XP) value to assign to the player. Values less than zero will be adjusted
