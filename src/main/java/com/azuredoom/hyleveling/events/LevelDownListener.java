@@ -3,9 +3,8 @@ package com.azuredoom.hyleveling.events;
 import java.util.UUID;
 
 /**
- * Interface for handling events when a player's level decreases in the system.
- * Classes implementing this interface should define specific behaviors
- * that occur when a player's level is reduced due to various actions or conditions.
+ * Interface for handling events when a player's level decreases in the system. Classes implementing this interface
+ * should define specific behaviors that occur when a player's level is reduced due to various actions or conditions.
  */
 public interface LevelDownListener {
 

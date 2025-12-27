@@ -7,9 +7,8 @@ import com.azuredoom.hyleveling.events.XpLossListener;
 import java.util.UUID;
 
 /**
- * Service interface for managing player levels and experience points (XP)
- * within a leveling system. This interface provides methods for retrieving
- * and modifying XP, as well as managing listeners for level-related events.
+ * Service interface for managing player levels and experience points (XP) within a leveling system. This interface
+ * provides methods for retrieving and modifying XP, as well as managing listeners for level-related events.
  */
 public interface LevelService {
 

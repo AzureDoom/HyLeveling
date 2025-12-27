@@ -7,12 +7,12 @@ import java.sql.*;
 import java.util.UUID;
 
 /**
- * Implementation of the {@link LevelRepository} interface for managing player level data in an H2 database.
- * This class provides functionality to store, retrieve, and check the existence of player level data,
- * as well as handling the creation of the required database schema if it does not already exist.
+ * Implementation of the {@link LevelRepository} interface for managing player level data in an H2 database. This class
+ * provides functionality to store, retrieve, and check the existence of player level data, as well as handling the
+ * creation of the required database schema if it does not already exist.
  * <p>
- * The H2 database connection is established when an instance is created and should be properly
- * closed using the {@link #close()} method to release resources.
+ * The H2 database connection is established when an instance is created and should be properly closed using the
+ * {@link #close()} method to release resources.
  */
 public class H2LevelRepository implements LevelRepository {
 
@@ -28,15 +28,12 @@ public class H2LevelRepository implements LevelRepository {
     }
 
     /**
-     * Creates the database table `player_levels` if it does not already exist.
-     * This method ensures that the required schema for storing player level data
-     * is available in the H2 database. The table has the following structure:
-     * - `player_id` (VARCHAR(36)): Primary key, represents the unique identifier of a player.
-     * - `xp` (BIGINT): Non-null, represents the experience points of the player.
-     *
-     * This method uses an SQL CREATE TABLE statement with the `IF NOT EXISTS` clause to
-     * ensure that the operation is idempotent and avoids re-creating the table if it
-     * already exists in the database.
+     * Creates the database table `player_levels` if it does not already exist. This method ensures that the required
+     * schema for storing player level data is available in the H2 database. The table has the following structure: -
+     * `player_id` (VARCHAR(36)): Primary key, represents the unique identifier of a player. - `xp` (BIGINT): Non-null,
+     * represents the experience points of the player. This method uses an SQL CREATE TABLE statement with the `IF NOT
+     * EXISTS` clause to ensure that the operation is idempotent and avoids re-creating the table if it already exists
+     * in the database.
      *
      * @throws SQLException if an error occurs during the table creation process.
      */
@@ -54,9 +51,8 @@ public class H2LevelRepository implements LevelRepository {
     }
 
     /**
-     * Saves the player's level data into the database. This method uses an SQL
-     * MERGE statement to insert or update the player's experience points associated
-     * with their unique identifier.
+     * Saves the player's level data into the database. This method uses an SQL MERGE statement to insert or update the
+     * player's experience points associated with their unique identifier.
      *
      * @param data the PlayerLevelData object containing the player's unique ID and experience points
      * @throws HyLevelingException if an SQL error occurs while executing the save operation
@@ -77,13 +73,13 @@ public class H2LevelRepository implements LevelRepository {
     }
 
     /**
-     * Loads the level data of a player by their unique identifier from the database.
-     * This method queries the `player_levels` table to retrieve the stored experience points (XP)
-     * for the player and creates a {@link PlayerLevelData} object.
+     * Loads the level data of a player by their unique identifier from the database. This method queries the
+     * `player_levels` table to retrieve the stored experience points (XP) for the player and creates a
+     * {@link PlayerLevelData} object.
      *
      * @param id the UUID of the player whose level data is to be loaded
-     * @return a {@link PlayerLevelData} object containing the player's level data,
-     *         or {@code null} if no data is found for the given player
+     * @return a {@link PlayerLevelData} object containing the player's level data, or {@code null} if no data is found
+     *         for the given player
      * @throws HyLevelingException if an SQL error occurs while querying the database
      */
     @Override
@@ -109,8 +105,8 @@ public class H2LevelRepository implements LevelRepository {
     }
 
     /**
-     * Checks if a record exists in the `player_levels` table for the given player ID.
-     * This method executes a query to verify the existence of an entry in the database.
+     * Checks if a record exists in the `player_levels` table for the given player ID. This method executes a query to
+     * verify the existence of an entry in the database.
      *
      * @param id the UUID of the player whose existence is to be checked
      * @return {@code true} if a record exists for the player ID, {@code false} otherwise

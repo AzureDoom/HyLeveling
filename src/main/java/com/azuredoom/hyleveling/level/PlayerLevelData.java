@@ -3,10 +3,9 @@ package com.azuredoom.hyleveling.level;
 import java.util.UUID;
 
 /**
- * Represents the level-related data of a player within the leveling system.
- * This includes the player's unique identifier and their experience points (XP).
- * The class provides methods to retrieve and modify the player's XP, with constraints
- * ensuring it remains non-negative.
+ * Represents the level-related data of a player within the leveling system. This includes the player's unique
+ * identifier and their experience points (XP). The class provides methods to retrieve and modify the player's XP, with
+ * constraints ensuring it remains non-negative.
  */
 public class PlayerLevelData {
 
@@ -38,12 +37,11 @@ public class PlayerLevelData {
     }
 
     /**
-     * Sets the player's experience points (XP) to the specified value.
-     * Ensures that the XP cannot be set to a negative number; any
-     * negative input value will be adjusted to zero.
+     * Sets the player's experience points (XP) to the specified value. Ensures that the XP cannot be set to a negative
+     * number; any negative input value will be adjusted to zero.
      *
-     * @param xp The experience points to assign to the player. Values less
-     *           than zero will be automatically adjusted to zero.
+     * @param xp The experience points to assign to the player. Values less than zero will be automatically adjusted to
+     *           zero.
      */
     public void setXp(long xp) {
         this.xp = Math.max(0, xp);

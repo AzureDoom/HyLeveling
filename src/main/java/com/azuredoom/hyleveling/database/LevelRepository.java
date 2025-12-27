@@ -5,9 +5,8 @@ import com.azuredoom.hyleveling.level.PlayerLevelData;
 import java.util.UUID;
 
 /**
- * Repository interface for managing player level data.
- * This interface provides methods to save, load, check existence, and close resources
- * related to player level data storage.
+ * Repository interface for managing player level data. This interface provides methods to save, load, check existence,
+ * and close resources related to player level data storage.
  */
 public interface LevelRepository {
 
