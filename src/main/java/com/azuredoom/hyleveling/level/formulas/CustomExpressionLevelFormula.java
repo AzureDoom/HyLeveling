@@ -6,52 +6,47 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 import java.util.Map;
 
 /**
- * A customizable implementation of the {@link LevelFormula} interface that allows XP-to-level calculations
- * using a user-defined mathematical expression.
+ * A customizable implementation of the {@link LevelFormula} interface that allows XP-to-level calculations using a
+ * user-defined mathematical expression.
  * <p>
- * The XP progression is defined by an expression string that is evaluated dynamically for a given level.
- * This enables highly flexible leveling systems without requiring custom Java code.
- *
+ * The XP progression is defined by an expression string that is evaluated dynamically for a given level. This enables
+ * highly flexible leveling systems without requiring custom Java code.
  * <h2>Expression Support</h2>
  * <p>
  * The expression represents the <em>XP floor</em> required to reach a specific level and may reference:
  * <ul>
- *   <li>The built-in variable {@code level} (an integer {@code >= 1})</li>
- *   <li>Any number of user-defined constants supplied via the constants map</li>
+ * <li>The built-in variable {@code level} (an integer {@code >= 1})</li>
+ * <li>Any number of user-defined constants supplied via the constants map</li>
  * </ul>
- *
  * <h2>Examples</h2>
  * <p>
  * Valid expressions include:
  * <ul>
- *   <li>{@code "100 * level"}</li>
- *   <li>{@code "level^2 + 50"}</li>
- *   <li>{@code "a * level + b"} (with constants {@code a} and {@code b})</li>
- *   <li>{@code "exp(a * (level - 1)) * b"}</li>
+ * <li>{@code "100 * level"}</li>
+ * <li>{@code "level^2 + 50"}</li>
+ * <li>{@code "a * level + b"} (with constants {@code a} and {@code b})</li>
+ * <li>{@code "exp(a * (level - 1)) * b"}</li>
  * </ul>
- *
  * <h2>Behavior</h2>
  * <ul>
- *   <li>{@link #getXpForLevel(int)} evaluates the expression to determine the minimum XP required for a level.</li>
- *   <li>{@link #getLevelForXp(long)} determines the highest level whose XP floor is less than or equal to the
- *       provided XP value.</li>
- *   <li>Level lookup is performed using a binary search up to the configured maximum level.</li>
+ * <li>{@link #getXpForLevel(int)} evaluates the expression to determine the minimum XP required for a level.</li>
+ * <li>{@link #getLevelForXp(long)} determines the highest level whose XP floor is less than or equal to the provided XP
+ * value.</li>
+ * <li>Level lookup is performed using a binary search up to the configured maximum level.</li>
  * </ul>
- *
  * <h2>Constraints</h2>
  * <p>
  * This class enforces the following invariants:
  * <ul>
- *   <li>The expression string must not be {@code null} or blank.</li>
- *   <li>The maximum level must be {@code >= 1}.</li>
- *   <li>Level inputs must be {@code >= 1}.</li>
- *   <li>The expression should be <em>monotonically increasing</em> with respect to {@code level} to ensure
- *       correct level calculation.</li>
+ * <li>The expression string must not be {@code null} or blank.</li>
+ * <li>The maximum level must be {@code >= 1}.</li>
+ * <li>Level inputs must be {@code >= 1}.</li>
+ * <li>The expression should be <em>monotonically increasing</em> with respect to {@code level} to ensure correct level
+ * calculation.</li>
  * </ul>
- *
  * <h2>Notes</h2>
  * <ul>
- *   <li>Non-monotonic expressions may result in undefined or incorrect leveling behavior.</li>
+ * <li>Non-monotonic expressions may result in undefined or incorrect leveling behavior.</li>
  * </ul>
  */
 public class CustomExpressionLevelFormula implements LevelFormula {
@@ -125,15 +120,13 @@ public class CustomExpressionLevelFormula implements LevelFormula {
     }
 
     /**
-     * Evaluates the expression defined in the instance using the provided level and constants.
-     * This method builds a mathematical expression based on the configured expression text,
-     * substitutes the "level" variable with the given level value, and substitutes additional
-     * constants before evaluating the result.
+     * Evaluates the expression defined in the instance using the provided level and constants. This method builds a
+     * mathematical expression based on the configured expression text, substitutes the "level" variable with the given
+     * level value, and substitutes additional constants before evaluating the result.
      *
-     * @param level The level value to be substituted into the expression.
-     *              Determines the context of the calculation.
-     * @return The result of evaluating the expression after substituting the "level"
-     *         variable and all defined constants.
+     * @param level The level value to be substituted into the expression. Determines the context of the calculation.
+     * @return The result of evaluating the expression after substituting the "level" variable and all defined
+     *         constants.
      */
     private double eval(int level) {
         var builder = new ExpressionBuilder(expressionText)

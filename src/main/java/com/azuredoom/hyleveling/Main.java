@@ -1,7 +1,6 @@
 package com.azuredoom.hyleveling;
 
 import com.azuredoom.hyleveling.config.ConfigManager;
-import com.azuredoom.hyleveling.config.HyLevelingConfig;
 import com.azuredoom.hyleveling.config.LevelFormulaFactory;
 import com.azuredoom.hyleveling.database.DataSourceFactory;
 import com.azuredoom.hyleveling.database.JdbcLevelRepository;

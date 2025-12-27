@@ -10,7 +10,6 @@ import com.azuredoom.hyleveling.level.formulas.loader.LevelTableLoader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Locale;
@@ -114,7 +113,8 @@ public final class LevelFormulaFactory {
 
     /**
      * Converts a {@link FormulaDescriptor} into a {@link LevelFormula} based on the descriptor's type and parameters.
-     * The supported formula types are "EXPONENTIAL", "LINEAR", "TABLE", and "CUSTOM", each with specific parameter requirements.
+     * The supported formula types are "EXPONENTIAL", "LINEAR", "TABLE", and "CUSTOM", each with specific parameter
+     * requirements.
      *
      * @param d the formula descriptor containing the type and parameters for constructing the level formula
      * @return a {@link LevelFormula} instance constructed according to the descriptor
