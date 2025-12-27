@@ -60,6 +60,27 @@ public class LevelServiceImpl implements LevelService {
         return get(id).getXp();
     }
 
+    @Override
+    public int setLevel(UUID playerId, int level) {
+        var targetLevel = Math.max(level, 1);
+
+        var data = get(playerId);
+        var oldLevel = getLevel(playerId);
+
+        var targetXp = getXpForLevel(targetLevel);
+        data.setXp(targetXp);
+        repository.save(data);
+
+        var newLevel = getLevel(playerId);
+        if (newLevel > oldLevel) {
+            levelUpListeners.forEach(l -> l.onLevelUp(playerId, newLevel));
+        } else if (newLevel < oldLevel) {
+            levelDownListeners.forEach(l -> l.onLevelDown(playerId, newLevel));
+        }
+
+        return newLevel;
+    }
+
     /**
      * Retrieves the level of a player based on their current experience points (XP).
      *
@@ -69,6 +90,15 @@ public class LevelServiceImpl implements LevelService {
     @Override
     public int getLevel(UUID id) {
         return formula.getLevelForXp(get(id).getXp());
+    }
+
+    @Override
+    public long getXpForLevel(int level) {
+        if (level <= 1) {
+            return 0L;
+        }
+
+        return formula.getXpForLevel(level);
     }
 
     /**

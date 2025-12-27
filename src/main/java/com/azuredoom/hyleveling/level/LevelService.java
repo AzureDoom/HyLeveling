@@ -12,7 +12,11 @@ import java.util.UUID;
  */
 public interface LevelService {
 
+    int setLevel(UUID playerId, int level);
+
     int getLevel(UUID playerId);
+
+    long getXpForLevel(int level);
 
     long getXp(UUID playerId);
 
