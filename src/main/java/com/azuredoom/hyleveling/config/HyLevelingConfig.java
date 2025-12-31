@@ -1,5 +1,8 @@
 package com.azuredoom.hyleveling.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents the configuration settings for the HyLeveling system. This configuration includes database connection
  * settings and level progress formula details.
@@ -57,7 +60,7 @@ public class HyLevelingConfig {
 
         public String xpForLevel = "";
 
-        public java.util.Map<String, Double> constants = new java.util.HashMap<>();
+        public Map<String, Double> constants = new HashMap<>();
 
         public int maxLevel = 100000;
     }

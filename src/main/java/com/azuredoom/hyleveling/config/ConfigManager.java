@@ -108,7 +108,7 @@ public final class ConfigManager {
         try {
             Files.createDirectories(dataDir);
 
-            Path configPath = dataDir.resolve("hyleveling.yml");
+            var configPath = dataDir.resolve("hyleveling.yml");
             if (Files.notExists(configPath)) {
                 Files.writeString(
                     configPath,
@@ -122,7 +122,7 @@ public final class ConfigManager {
             opts.setMaxAliasesForCollections(50);
 
             var yaml = new Yaml(new Constructor(HyLevelingConfig.class, opts));
-            try (Reader reader = Files.newBufferedReader(configPath, StandardCharsets.UTF_8)) {
+            try (var reader = Files.newBufferedReader(configPath, StandardCharsets.UTF_8)) {
                 HyLevelingConfig cfg = yaml.load(reader);
                 return (cfg != null) ? cfg : new HyLevelingConfig();
             }
