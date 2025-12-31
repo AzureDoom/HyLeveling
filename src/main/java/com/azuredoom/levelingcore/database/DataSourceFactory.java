@@ -111,7 +111,10 @@ public final class DataSourceFactory {
             return false;
 
         var query = lower.substring(q + 1);
-        return containsQueryParam(query, "user") || containsQueryParam(query, "username");
+
+        return containsQueryParam(query, "user")
+            || containsQueryParam(query, "username")
+            || containsQueryParam(query, "password");
     }
 
     /**
