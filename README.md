@@ -12,6 +12,15 @@ Included in LevelingCore is also XP migration, which automatically recalculates 
 
 ---
 
+## Download & Installation
+To get started with LevelingCore, follow these steps:
+
+1. Visit the [Modtale](https://modtale.net/mod/levelingcore-a4c07062-0b3b-409d-be88-723d62a2f672) or [CurseForge](https://www.curseforge.com/hytale/mods/levelingcore) pages to download the latest version of LevelingCore.
+2. Follow the [Installation guide](https://github.com/AzureDoom/LevelingCore/wiki/Installation) in our Wiki for detailed instructions.
+3. Follow the [LevelingCore Configuration guide](https://github.com/AzureDoom/LevelingCore/wiki/LevelingCore-Configuration) to set up LevelingCore according to your server's needs.
+
+---
+
 ## Wiki
 For detailed documentation and guides, please visit our [LevelingCore Wiki](https://github.com/AzureDoom/LevelingCore/wiki).
 
