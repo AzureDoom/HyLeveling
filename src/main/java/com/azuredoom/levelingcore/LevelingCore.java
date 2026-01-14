@@ -17,6 +17,7 @@ import com.azuredoom.levelingcore.events.GainXPEventSystem;
 import com.azuredoom.levelingcore.events.LossXPEventSystem;
 import com.azuredoom.levelingcore.exceptions.LevelingCoreException;
 import com.azuredoom.levelingcore.level.LevelServiceImpl;
+import com.azuredoom.levelingcore.rank.RankManager;
 
 public class LevelingCore extends JavaPlugin {
 
@@ -27,6 +28,8 @@ public class LevelingCore extends JavaPlugin {
     public static final ConfigBootstrap.Bootstrap bootstrap = ConfigBootstrap.bootstrap(configPath);
 
     public static LevelServiceImpl levelingService;
+
+    public static RankManager rankManager;
 
     private static LevelingCore INSTANCE;
 
@@ -57,6 +60,8 @@ public class LevelingCore extends JavaPlugin {
         this.config.save();
         LOGGER.at(Level.INFO).log("Leveling Core initializing");
         levelingService = bootstrap.service();
+        rankManager = new RankManager();
+        rankManager.load(configPath);
         getCommandRegistry().registerCommand(new AddLevelCommand());
         getCommandRegistry().registerCommand(new CheckLevelCommand());
         getCommandRegistry().registerCommand(new AddXpCommand());
@@ -93,6 +98,10 @@ public class LevelingCore extends JavaPlugin {
      */
     public static LevelServiceImpl getLevelService() {
         return levelingService;
+    }
+
+    public static RankManager getRankManager() {
+        return rankManager;
     }
 
     /**

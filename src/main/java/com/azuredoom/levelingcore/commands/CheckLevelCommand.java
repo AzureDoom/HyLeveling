@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.util.EventTitleUtil;
 
 import javax.annotation.Nonnull;
 
+import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 
 /**
@@ -40,7 +41,14 @@ public class CheckLevelCommand extends CommandBase {
         var playerRef = this.playerArg.get(commandContext);
         var playerUUID = playerRef.getUuid();
         var levelRef = LevelingCoreApi.getLevelServiceIfPresent().get().getLevel(playerUUID);
-        var currentLevelMsg = playerRef.getUsername() + " current level is " + levelRef;
+        var rankName = "Unranked";
+        var rankManager = LevelingCore.getRankManager();
+        if (rankManager != null) {
+            rankName = rankManager.getRankForLevel(levelRef)
+                .map(rank -> rank.name)
+                .orElse("Unranked");
+        }
+        var currentLevelMsg = playerRef.getUsername() + " current level is " + levelRef + " [" + rankName + "]";
         EventTitleUtil.showEventTitleToPlayer(playerRef, Message.raw(currentLevelMsg), Message.raw(""), true);
         commandContext.sendMessage(Message.raw(currentLevelMsg));
     }
