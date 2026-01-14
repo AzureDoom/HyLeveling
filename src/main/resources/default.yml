@@ -6,7 +6,7 @@
 #
 # Supported JDBC URLs:
 #   H2 (file):
-#     jdbc:h2:file:./data/plugins/levelingcore/levelingcore;MODE=PostgreSQL
+#     jdbc:h2:file:./mods/levelingcore_LevelingCore/data/levelingcore;MODE=PostgreSQL
 #
 #   MySQL:
 #     jdbc:mysql://host:port/dbname
