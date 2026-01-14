@@ -11,7 +11,6 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
-import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 
@@ -79,10 +78,10 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                 LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService -> {
                     int levelBefore = levelService.getLevel(player.getUuid());
                     levelService.addXp(player.getUuid(), xpAmount);
-                    Universe.get().sendMessage(Message.raw("Gained " + xpAmount + " XP"));
+                    player.sendMessage(Message.raw("Gained " + xpAmount + " XP"));
                     int levelAfter = levelService.getLevel(player.getUuid());
                     if (levelAfter > levelBefore) {
-                        Universe.get().sendMessage(Message.raw("Level Up! You are now level " + levelAfter));
+                        player.sendMessage(Message.raw("Level Up! You are now level " + levelAfter));
                     }
                 });
             }

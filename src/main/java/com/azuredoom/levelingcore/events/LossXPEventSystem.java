@@ -8,7 +8,6 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
-import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 
@@ -63,14 +62,14 @@ public class LossXPEventSystem extends DeathSystems.OnDeathSystem {
                 if (xpLoss <= 0)
                     return;
                 levelService.removeXp(playerUuid, xpLoss);
-                Universe.get().sendMessage(Message.raw("You died and lost " + xpLoss + " XP"));
+                player.sendMessage(Message.raw("You died and lost " + xpLoss + " XP"));
                 int levelAfter = levelService.getLevel(playerUuid);
                 if (levelAfter < currentLevel) {
-                    Universe.get().sendMessage(Message.raw("Level Down! You are now level " + levelAfter));
+                    player.sendMessage(Message.raw("Level Down! You are now level " + levelAfter));
                 }
             } else if (this.config.get().isEnableAllLevelsLostOnDeath()) {
                 levelService.setLevel(playerUuid, 1);
-                Universe.get().sendMessage(Message.raw("You died and lost all levels"));
+                player.sendMessage(Message.raw("You died and lost all levels"));
             } else if (this.config.get().getMinLevelForLevelDown() <= currentLevel) {
                 long levelFloorXp = levelService.getXpForLevel(currentLevel);
                 long xpLoss = (long) (currentXp * this.config.get().getXpLossPercentage());
@@ -78,12 +77,11 @@ public class LossXPEventSystem extends DeathSystems.OnDeathSystem {
                 long actualLoss = currentXp - newXp;
 
                 if (actualLoss <= 0) {
-                    Universe.get()
-                        .sendMessage(Message.raw("You are already at the minimum XP for level " + currentLevel));
+                    player.sendMessage(Message.raw("You are already at the minimum XP for level " + currentLevel));
                     return;
                 }
                 levelService.setXp(playerUuid, newXp);
-                Universe.get().sendMessage(Message.raw("You died and lost " + actualLoss + " XP"));
+                player.sendMessage(Message.raw("You died and lost " + actualLoss + " XP"));
             }
         });
     }
