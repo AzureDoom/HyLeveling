@@ -1,6 +1,5 @@
 package com.azuredoom.levelingcore.events;
 
-import com.azuredoom.levelingcore.lang.CommandLang;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -15,6 +14,7 @@ import javax.annotation.Nonnull;
 
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.config.GUIConfig;
+import com.azuredoom.levelingcore.lang.CommandLang;
 
 /**
  * The LossXPEventSystem class is a subsystem that extends {@link DeathSystems.OnDeathSystem} to handle experience

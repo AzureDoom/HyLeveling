@@ -1,11 +1,9 @@
 package com.azuredoom.levelingcore.events;
 
-import com.azuredoom.levelingcore.lang.CommandLang;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
@@ -19,6 +17,7 @@ import javax.annotation.Nonnull;
 
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.config.GUIConfig;
+import com.azuredoom.levelingcore.lang.CommandLang;
 
 /**
  * The {@code GainXPEventSystem} class handles the process of awarding experience points (XP) to players based on

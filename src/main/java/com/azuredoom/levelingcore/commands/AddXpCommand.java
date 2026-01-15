@@ -1,7 +1,5 @@
 package com.azuredoom.levelingcore.commands;
 
-import com.azuredoom.levelingcore.lang.CommandLang;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
@@ -12,6 +10,7 @@ import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import javax.annotation.Nonnull;
 
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
+import com.azuredoom.levelingcore.lang.CommandLang;
 
 /**
  * The AddXpCommand class is responsible for handling the logic to add experience points (XP) to a player's progress

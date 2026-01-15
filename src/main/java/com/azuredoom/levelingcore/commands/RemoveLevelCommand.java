@@ -1,7 +1,5 @@
 package com.azuredoom.levelingcore.commands;
 
-import com.azuredoom.levelingcore.lang.CommandLang;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
@@ -12,6 +10,7 @@ import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import javax.annotation.Nonnull;
 
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
+import com.azuredoom.levelingcore.lang.CommandLang;
 
 /**
  * Represents a command that removes a specific number of levels from a player. This command operates within the
@@ -46,7 +45,8 @@ public class RemoveLevelCommand extends CommandBase {
         var playerUUID = playerRef.getUuid();
         LevelingCoreApi.getLevelServiceIfPresent().get().removeLevel(playerUUID, levelRef);
         var level = LevelingCoreApi.getLevelServiceIfPresent().get().getLevel(playerUUID);
-        var removeLevelMsg = CommandLang.REMOVE_LEVEL_1.param("level", levelRef).param("player", playerRef.getUsername());
+        var removeLevelMsg = CommandLang.REMOVE_LEVEL_1.param("level", levelRef)
+            .param("player", playerRef.getUsername());
         var levelTotalMsg = CommandLang.REMOVE_LEVEL_2.param("player", playerRef.getUsername()).param("level", level);
         EventTitleUtil.showEventTitleToPlayer(playerRef, levelTotalMsg, removeLevelMsg, true);
         commandContext.sendMessage(removeLevelMsg);
