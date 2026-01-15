@@ -1,0 +1,25 @@
+levelingcore.notinitialized = Ядро прокачки не инициализировано
+levelingcore.levelup = Вы достигли уровня {level}
+levelingcore.gained = Получено {xp} ед. опыта
+levelingcore.lostxp = Вы умерли и потеряли {xp} ед. опыта
+levelingcore.leveldown = Понижение уровня! Теперь у вас уровень {level}
+levelingcore.deathalllevels = Вы умерли и потеряли все уровни!
+levelingcore.minleveldeath = У вас уже минимальное количество опыта для уровня {level}
+
+levelingcore.addlevel.1 = Игроку {player} добавлен {level} уровень
+levelingcore.addlevel.2 = Игроку {player} добавлено {level} уровней
+levelingcore.addlevel.3 = Игрок {player} теперь имеет уровень {level}
+
+levelingcore.addxp.1 = Игроку {player} добавлено {xp} ед. опыта
+levelingcore.addxp.2 = {player} теперь имеет уровень {level}
+
+levelingcore.checklevel = Текущий уровень игрока {player}: {level}
+
+levelingcore.removelevel.1 = У игрока {player} удалён {level} уровень
+levelingcore.removelevel.2 = Игрок {player} теперь имеет уровень {level}
+
+levelingcore.removexp.1 = У игрока {player} удалено {xp} ед. опыта
+levelingcore.removexp.2 = Игрок {player} теперь имеет уровень {level}
+
+levelingcore.setlevel.1 = Уровень игрока {player} установлен на {level}
+levelingcore.setlevel.2 = Игрок {player} теперь имеет уровень {level}

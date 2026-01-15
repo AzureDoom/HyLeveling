@@ -1,0 +1,25 @@
+levelingcore.notinitialized = Le noyau de niveaux n’est pas initialisé
+levelingcore.levelup = Vous êtes maintenant niveau {level}
+levelingcore.gained = {xp} XP gagnés
+levelingcore.lostxp = Vous êtes mort et avez perdu {xp} XP
+levelingcore.leveldown = Niveau perdu ! Vous êtes maintenant niveau {level}
+levelingcore.deathalllevels = Vous êtes mort et avez perdu tous vos niveaux !
+levelingcore.minleveldeath = Vous êtes déjà au minimum d’XP pour le niveau {level}
+
+levelingcore.addlevel.1 = {level} niveau ajouté à {player}
+levelingcore.addlevel.2 = {level} niveaux ajoutés à {player}
+levelingcore.addlevel.3 = Le joueur {player} est maintenant niveau {level}
+
+levelingcore.addxp.1 = {xp} XP ajoutés à {player}
+levelingcore.addxp.2 = Le joueur {player} est maintenant niveau {level}
+
+levelingcore.checklevel = Le niveau actuel de {player} est {level}
+
+levelingcore.removelevel.1 = {level} niveau retiré à {player}
+levelingcore.removelevel.2 = Le joueur {player} est maintenant niveau {level}
+
+levelingcore.removexp.1 = {xp} XP retirés à {player}
+levelingcore.removexp.2 = Le joueur {player} est maintenant niveau {level}
+
+levelingcore.setlevel.1 = Le niveau de {player} a été défini à {level}
+levelingcore.setlevel.2 = Le joueur {player} est maintenant niveau {level}
