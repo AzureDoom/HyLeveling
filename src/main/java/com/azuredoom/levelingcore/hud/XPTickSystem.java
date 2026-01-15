@@ -1,6 +1,5 @@
 package com.azuredoom.levelingcore.hud;
 
-import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.buuz135.mhud.MultipleHUD;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -14,6 +13,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
+
+import com.azuredoom.levelingcore.api.LevelingCoreApi;
 
 public class XPTickSystem extends EntityTickingSystem<EntityStore> {
 
