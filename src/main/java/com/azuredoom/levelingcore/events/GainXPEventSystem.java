@@ -80,9 +80,12 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                 var xpAmount = Math.max(1, (long) (maxHealth * this.config.get().getDefaultXPGainPercentage()));
                 LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService -> {
                     var levelBefore = levelService.getLevel(player.getUuid());
+                    // Checks that the SimpleParty plugin is installed
                     if (PluginManager.get().getPlugin(new PluginIdentifier("net.justmadlime", "SimpleParty")) != null) {
+                        // INFO: Handle XP gain for SimpleParty plugin when it's installed
                         SimplePartyCompat.onXPGain(xpAmount, player.getUuid(), levelService, config, player);
                     } else {
+                        // Fallback to default XP gain if SimpleParty is not installed
                         levelService.addXp(player.getUuid(), xpAmount);
                         if (config.get().isEnableXPChatMsgs())
                             player.sendMessage(CommandLang.GAINED.param("xp", xpAmount));

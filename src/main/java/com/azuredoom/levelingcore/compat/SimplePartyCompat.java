@@ -11,8 +11,21 @@ import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.lang.CommandLang;
 import com.azuredoom.levelingcore.level.LevelServiceImpl;
 
+/**
+ * Utility class to provide compatibility for handling XP gain in a party.
+ */
 public class SimplePartyCompat {
 
+    /**
+     * Handles XP gain for a player, distributing XP either to the player individually
+     * or to all members of their party if party XP sharing is enabled.
+     *
+     * @param xp The number of experience points gained.
+     * @param playerUuid The unique identifier of the player gaining XP.
+     * @param levelService The service handling XP and level management.
+     * @param config The configuration object containing settings related to XP sharing and notifications.
+     * @param player The player instance receiving the XP or notifications.
+     */
     public static void onXPGain(
         long xp,
         UUID playerUuid,
