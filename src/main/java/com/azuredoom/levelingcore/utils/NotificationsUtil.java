@@ -5,8 +5,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.util.NotificationUtil;
 
 /**
- * Utility class for sending notifications to players. Provides a method to send success notifications
- * with a given message to a specified player reference.
+ * Utility class for sending notifications to players. Provides a method to send success notifications with a given
+ * message to a specified player reference.
  */
 public class NotificationsUtil {
 
