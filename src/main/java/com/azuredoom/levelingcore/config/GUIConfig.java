@@ -109,6 +109,12 @@ public class GUIConfig {
             (exConfig, extraInfo) -> exConfig.manaLevelUpMultiplier
         )
         .add()
+        .append(
+            new KeyedCodec<Boolean>("EnableStatHealing", Codec.BOOLEAN),
+            (exConfig, aDouble, extraInfo) -> exConfig.enableStatHealing = aDouble,
+            (exConfig, extraInfo) -> exConfig.enableStatHealing
+        )
+        .add()
         .build();
 
     private boolean enableXPLossOnDeath = false;
@@ -142,6 +148,8 @@ public class GUIConfig {
     private float staminaLevelUpMultiplier = 0.35F;
 
     private float manaLevelUpMultiplier = 0.6F;
+
+    private boolean enableStatHealing = true;
 
     public GUIConfig() {}
 
@@ -287,5 +295,14 @@ public class GUIConfig {
      */
     public float getManaLevelUpMultiplier() {
         return manaLevelUpMultiplier;
+    }
+
+    /**
+     * Determines whether the stat healing system is enabled in the configuration.
+     *
+     * @return {@code true} if stat healing is enabled, otherwise {@code false}.
+     */
+    public boolean isEnableStatHealing() {
+        return enableStatHealing;
     }
 }

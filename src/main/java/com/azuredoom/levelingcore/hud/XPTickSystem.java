@@ -2,15 +2,13 @@ package com.azuredoom.levelingcore.hud;
 
 import com.buuz135.mhud.MultipleHUD;
 import com.hypixel.hytale.common.plugin.PluginIdentifier;
-import com.hypixel.hytale.component.ArchetypeChunk;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Holder;
-import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.EntityUtils;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.modules.entity.EntityModule;
 import com.hypixel.hytale.server.core.plugin.PluginManager;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -50,7 +48,7 @@ public class XPTickSystem extends EntityTickingSystem<EntityStore> {
         LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService1 -> {
             var xpHud = new XPBarHud(playerRef, levelService1, config);
             if (PluginManager.get().getPlugin(new PluginIdentifier("Buuz135", "MultipleHUD")) != null) {
-                MultipleHUD.getInstance().setCustomHud(player, playerRef, "levelingcore_xpbar", xpHud);
+                MultipleHudCompat.showHud(player, playerRef, xpHud);
             } else {
                 player.sendMessage(
                     Message.raw(
@@ -66,32 +64,11 @@ public class XPTickSystem extends EntityTickingSystem<EntityStore> {
                     levelService1.registerLevelUpListener(((playerId, newLevel) -> {
                         if (playerId != playerRef.getUuid())
                             return;
-                        StatsUtils.doHealthIncrease(
-                            store,
-                            playerRef,
-                            newLevel * config.get().getHealthLevelUpMultiplier()
-                        );
-                        StatsUtils.doStaminaIncrease(
-                            store,
-                            playerRef,
-                            newLevel * config.get().getStaminaLevelUpMultiplier()
-                        );
-                        StatsUtils.doManaIncrease(store, playerRef, newLevel * config.get().getManaLevelUpMultiplier());
+                        StatsUtils.applyAllStats(player, playerRef, newLevel, config);
                     }));
                     levelService1.registerLevelDownListener(((playerId, newLevel) -> {
-                        StatsUtils.resetStats(store, playerRef);
-
-                        StatsUtils.doHealthIncrease(
-                            store,
-                            playerRef,
-                            newLevel * config.get().getHealthLevelUpMultiplier()
-                        );
-                        StatsUtils.doStaminaIncrease(
-                            store,
-                            playerRef,
-                            newLevel * config.get().getStaminaLevelUpMultiplier()
-                        );
-                        StatsUtils.doManaIncrease(store, playerRef, newLevel * config.get().getManaLevelUpMultiplier());
+                        StatsUtils.resetStats(player, playerRef);
+                        StatsUtils.applyAllStats(player, playerRef, newLevel, config);
                     }));
                 });
             }
