@@ -1,6 +1,5 @@
 package com.azuredoom.levelingcore.hud;
 
-import com.buuz135.mhud.MultipleHUD;
 import com.hypixel.hytale.common.plugin.PluginIdentifier;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -20,6 +19,7 @@ import java.util.logging.Level;
 
 import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
+import com.azuredoom.levelingcore.compat.MultipleHudCompat;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.utils.StatsUtils;
 
