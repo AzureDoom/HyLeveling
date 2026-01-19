@@ -35,7 +35,7 @@ public class XPValues {
                             "defaultxpmapping.csv not found in resources (expected at " + RESOURCE_DEFAULT + ")"
                         );
                     }
-                    LevelingCore.LOGGER.at(Level.INFO).log("Creating default XP config at {0}", configPath);
+                    LevelingCore.LOGGER.at(Level.INFO).log("Creating default XP config at " + configPath);
                     Files.copy(in, configPath, StandardCopyOption.REPLACE_EXISTING);
                 }
             }
@@ -43,7 +43,7 @@ public class XPValues {
             var mapping = readXpCsv(configPath);
 
             LevelingCore.LOGGER.at(Level.INFO)
-                .log("Loaded XP mapping from {0} ({1} entries)", configPath, mapping.size());
+                .log("Loaded XP mapping from " + configPath + " " + mapping.size() +" entries)");
             return mapping;
 
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class XPValues {
 
                 var parts = line.split(",", 2);
                 if (parts.length != 2) {
-                    LevelingCore.LOGGER.at(Level.WARNING).log("Skipping invalid CSV line: {0}", line);
+                    LevelingCore.LOGGER.at(Level.WARNING).log("Skipping invalid CSV line: " + line);
                     continue;
                 }
 
@@ -91,12 +91,9 @@ public class XPValues {
                     xp = Integer.parseInt(xpStr);
                 } catch (NumberFormatException nfe) {
                     LevelingCore.LOGGER.at(Level.WARNING)
-                        .log(
-                            "Invalid XP value for {0}: {1} (line: {2})",
-                            npcTypeId,
-                            xpStr,
-                            line
-                        );
+                            .log(
+                                    "Invalid XP value for " + npcTypeId + ": " + xpStr + " (line: " + line + ")"
+                            );
                     continue;
                 }
 
@@ -105,27 +102,5 @@ public class XPValues {
         }
 
         return out;
-    }
-
-    public static void writeXpCsv(Path csvPath, Map<String, Integer> mapping) throws Exception {
-        try (
-            BufferedWriter w = Files.newBufferedWriter(
-                csvPath,
-                StandardCharsets.UTF_8,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING
-            )
-        ) {
-
-            w.write("npctypeid,xp");
-            w.newLine();
-
-            for (var e : mapping.entrySet()) {
-                w.write(e.getKey());
-                w.write(",");
-                w.write(Integer.toString(e.getValue()));
-                w.newLine();
-            }
-        }
     }
 }
