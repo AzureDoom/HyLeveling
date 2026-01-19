@@ -1,3 +1,19 @@
+v0.5.0
+- Hopefully fixed any Thread issues.
+- Fixed Spawn_Void mob not giving XP.
+- Beefed up base Level Up Multiplier values after some play testing. (Config reset recommended)
+- Fixed xp mapping logging not logging correctly.
+- Added level up rewards controlled by config.
+  - Uses a cvs located at /mods/levelingcore_LevelingCore/data/config/levelrewardmapping.csv
+  - Supports multiple rewards per level. Example:
+    ```
+    itemnameid,quantity,lvl
+    Ore_Copper,3,10
+    Ingredient_Fibre,16,10
+    Ore_Iron,2,15
+    Weapon_Arrow_Crude,8,15
+    ```
+
 v0.4.0
 - Implemented stat healing on level up (Config option to disable this if you don't like it)
 - Added a level up sound, with a config option to change it. (Default: SFX_Divine_Respawn)
