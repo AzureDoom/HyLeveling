@@ -115,8 +115,10 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                             );
                         } else {
                             // Fallback to default XP gain if SimpleParty is not installed
-                            NotificationsUtil.sendNotification(playerRef, "Gained " + xpAmount + " XP");
                             levelService.addXp(player.getUuid(), xpAmount);
+
+                            if(config.get().isEnableXPChatMsgs())
+                                NotificationsUtil.sendNotification(playerRef, "Gained " + xpAmount + " XP");
                         }
                         var levelAfter = levelService.getLevel(player.getUuid());
                         if (levelAfter > levelBefore) {
