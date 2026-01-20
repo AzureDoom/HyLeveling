@@ -33,7 +33,7 @@ public class XPBarHud extends CustomUIHud {
 
     @Override
     protected void build(@NonNullDecl UICommandBuilder uiCommandBuilder) {
-        uiCommandBuilder.append("xpbar.ui");
+        uiCommandBuilder.append("HUD/LevelingCore/xpbar.ui");
         update(uiCommandBuilder);
     }
 
