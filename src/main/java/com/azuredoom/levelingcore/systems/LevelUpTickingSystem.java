@@ -39,7 +39,7 @@ public class LevelUpTickingSystem extends EntityTickingSystem<EntityStore> {
         if (player == null || playerRef == null) {
             return;
         }
-        LevelUpListenerRegistrar.ensureRegistered(player, playerRef, config);
+        LevelUpListenerRegistrar.ensureRegistered(store, player, playerRef, config);
     }
 
     @NullableDecl

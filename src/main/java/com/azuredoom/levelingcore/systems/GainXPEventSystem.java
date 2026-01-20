@@ -97,7 +97,7 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                 var xpAmount = config.get().isUseConfigXPMappingsInsteadOfHealthDefaults()
                     ? getXPMapping
                     : xpAmountHealth;
-                player.getWorld().execute(() -> {
+                store.getExternalData().getWorld().execute(() -> {
                     LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService -> {
                         var levelBefore = levelService.getLevel(player.getUuid());
                         // Checks that the SimpleParty plugin is installed

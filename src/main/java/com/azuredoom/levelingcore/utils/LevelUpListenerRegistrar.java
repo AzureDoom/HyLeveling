@@ -1,11 +1,13 @@
 package com.azuredoom.levelingcore.utils;
 
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.EntityModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 
 import java.util.Collections;
@@ -22,6 +24,7 @@ public final class LevelUpListenerRegistrar {
         Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     public static void ensureRegistered(
+            Store<EntityStore> store,
         Player player,
         PlayerRef playerRef,
         Config<GUIConfig> config
@@ -38,7 +41,7 @@ public final class LevelUpListenerRegistrar {
             if (!config.get().isEnableStatLeveling())
                 return;
 
-            player.getWorld().execute(() -> levelService.registerLevelUpListener((playerId, newLevel) -> {
+            store.getExternalData().getWorld().execute(() -> levelService.registerLevelUpListener((playerId, newLevel) -> {
                 if (!playerId.equals(id))
                     return;
 

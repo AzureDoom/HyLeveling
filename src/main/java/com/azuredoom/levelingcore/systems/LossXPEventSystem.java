@@ -53,7 +53,7 @@ public class LossXPEventSystem extends DeathSystems.OnDeathSystem {
         if (player == null)
             return;
 
-        player.getWorld().execute(() -> {
+        store.getExternalData().getWorld().execute(() -> {
             LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService -> {
                 var playerUuid = player.getUuid();
                 var currentXp = levelService.getXp(playerUuid);

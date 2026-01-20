@@ -50,7 +50,7 @@ public class LevelDownTickingSystem extends EntityTickingSystem<EntityStore> {
         var leveldown_sound = SoundEvent.getAssetMap().getIndex(config.get().getLevelDownSound());
         LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService1 -> {
             if (config.get().isEnableStatLeveling()) {
-                player.getWorld().execute(() -> {
+                store.getExternalData().getWorld().execute(() -> {
                     levelService1.registerLevelDownListener(((playerId, newLevel) -> {
                         StatsUtils.resetStats(player, playerRef);
                         StatsUtils.applyAllStats(player, playerRef, newLevel, config);

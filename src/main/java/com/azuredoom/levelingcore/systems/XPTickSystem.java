@@ -45,7 +45,7 @@ public class XPTickSystem extends EntityTickingSystem<EntityStore> {
             return;
         }
 
-        player.getWorld().execute(() -> {
+        store.getExternalData().getWorld().execute(() -> {
             LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService1 -> {
                 var xpHud = new XPBarHud(playerRef, levelService1, config);
                 if (PluginManager.get().getPlugin(new PluginIdentifier("Buuz135", "MultipleHUD")) != null) {
