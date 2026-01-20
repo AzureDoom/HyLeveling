@@ -80,7 +80,7 @@ public class XPValues {
                 var xpStr = parts[1].trim();
 
                 if (npcTypeId.isEmpty()) {
-                    LevelingCore.LOGGER.at(Level.WARNING).log("Skipping CSV line with empty npcTypeId: {0}", line);
+                    LevelingCore.LOGGER.at(Level.WARNING).log("Skipping CSV line with empty npcTypeId: " + line);
                     continue;
                 }
 
