@@ -24,9 +24,9 @@ import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.compat.SimplePartyCompat;
 import com.azuredoom.levelingcore.config.GUIConfig;
-import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.lang.CommandLang;
 import com.azuredoom.levelingcore.level.xp.XPValues;
+import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.utils.NotificationsUtil;
 
 /**

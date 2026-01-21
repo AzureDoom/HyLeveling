@@ -14,8 +14,8 @@ import javax.annotation.Nonnull;
 
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.config.GUIConfig;
-import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.lang.CommandLang;
+import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 
 /**
  * The LossXPEventSystem class is a subsystem that extends {@link DeathSystems.OnDeathSystem} to handle experience

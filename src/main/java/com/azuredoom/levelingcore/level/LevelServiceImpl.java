@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.azuredoom.levelingcore.database.JdbcLevelRepository;
-import com.azuredoom.levelingcore.listeners.*;
 import com.azuredoom.levelingcore.level.formulas.LevelFormula;
+import com.azuredoom.levelingcore.listeners.*;
 import com.azuredoom.levelingcore.playerdata.PlayerLevelData;
 
 /**

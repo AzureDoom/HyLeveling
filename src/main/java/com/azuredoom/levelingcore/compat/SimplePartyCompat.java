@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import com.azuredoom.levelingcore.config.GUIConfig;
-import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.level.LevelServiceImpl;
+import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.utils.NotificationsUtil;
 
 /**
