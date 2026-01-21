@@ -176,6 +176,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
 
         var healthIndex = DefaultEntityStatTypes.getHealth();
         var staminaIndex = DefaultEntityStatTypes.getStamina();
+        var oxygenIndex = DefaultEntityStatTypes.getOxygen();
         var manaIndex = DefaultEntityStatTypes.getMana();
 
         var healthModifier = new StaticModifier(
@@ -188,6 +189,11 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
             StaticModifier.CalculationType.ADDITIVE,
             levelService.getAgi(uuid) * 2.0F
         );
+        var oxygenModifier = new StaticModifier(
+            Modifier.ModifierTarget.MAX,
+            StaticModifier.CalculationType.ADDITIVE,
+            levelService.getAgi(uuid) * 2.0F
+        );
         var manaModifier = new StaticModifier(
             Modifier.ModifierTarget.MAX,
             StaticModifier.CalculationType.ADDITIVE,
@@ -196,10 +202,12 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
 
         var healthModifierKey = "LevelingCore_health_stat";
         var staminaModifierKey = "LevelingCore_stamina_stat";
+        var oxygenModifierKey = "LevelingCore_oxygen_stat";
         var manaModifierKey = "LevelingCore_mana_stat";
 
         playerStatMap.putModifier(healthIndex, healthModifierKey, healthModifier);
         playerStatMap.putModifier(staminaIndex, staminaModifierKey, staminaModifier);
+        playerStatMap.putModifier(oxygenIndex, oxygenModifierKey, oxygenModifier);
         playerStatMap.putModifier(manaIndex, manaModifierKey, manaModifier);
 
         this.refreshUI();
