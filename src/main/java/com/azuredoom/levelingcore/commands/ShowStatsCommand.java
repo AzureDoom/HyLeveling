@@ -44,11 +44,6 @@ public class ShowStatsCommand extends AbstractPlayerCommand {
     }
 
     @Override
-    public boolean hasPermission(@NonNullDecl CommandSender sender) {
-        return false;
-    }
-
-    @Override
     protected void execute(
         @NonNullDecl CommandContext commandContext,
         @NonNullDecl Store<EntityStore> store,
