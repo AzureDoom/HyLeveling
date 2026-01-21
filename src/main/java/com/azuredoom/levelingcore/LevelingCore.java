@@ -134,7 +134,6 @@ public class LevelingCore extends JavaPlugin {
 
     public void registerAllCommands() {
         getCommandRegistry().registerCommand(new AddLevelCommand(config));
-        getCommandRegistry().registerCommand(new CheckLevelCommand(config));
         getCommandRegistry().registerCommand(new AddXpCommand(config));
         getCommandRegistry().registerCommand(new SetLevelCommand(config));
         getCommandRegistry().registerCommand(new RemoveLevelCommand(config));
