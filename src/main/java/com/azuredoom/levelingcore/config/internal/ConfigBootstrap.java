@@ -11,6 +11,7 @@ import com.azuredoom.levelingcore.level.LevelServiceImpl;
 import com.azuredoom.levelingcore.level.itemlevellock.ItemToLevelMapping;
 import com.azuredoom.levelingcore.level.rewards.LevelRewards;
 import com.azuredoom.levelingcore.level.rewards.RewardEntry;
+import com.azuredoom.levelingcore.level.stats.StatsPerLevelMapping;
 import com.azuredoom.levelingcore.level.xp.XPValues;
 
 /**
@@ -34,6 +35,7 @@ public final class ConfigBootstrap {
         Map<String, Integer> xpMapping,
         Map<Integer, List<RewardEntry>> levelRewardMapping,
         Map<String, Integer> itemLevelMapping,
+        Map<Integer, Integer> statsPerLevelMapping,
         AutoCloseable closeable
     ) {}
 
@@ -67,7 +69,15 @@ public final class ConfigBootstrap {
         var xpMapping = XPValues.loadOrCreate(dataDir);
         var levelRewardMapping = LevelRewards.loadOrCreate(dataDir);
         var itemLevelMapping = ItemToLevelMapping.loadOrCreate(dataDir);
+        var statsPerLevelMapping = StatsPerLevelMapping.loadOrCreate(dataDir);
 
-        return new Bootstrap(service, xpMapping, levelRewardMapping, itemLevelMapping, repo::close);
+        return new Bootstrap(
+            service,
+            xpMapping,
+            levelRewardMapping,
+            itemLevelMapping,
+            statsPerLevelMapping,
+            repo::close
+        );
     }
 }

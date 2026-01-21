@@ -15,9 +15,11 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.lang.CommandLang;
+import com.azuredoom.levelingcore.level.stats.StatsPerLevelMapping;
 import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 
 public final class LevelUpListenerRegistrar {
@@ -70,7 +72,13 @@ public final class LevelUpListenerRegistrar {
                         }
                     }
                     if (!config.get().isDisableStatPointGainOnLevelUp()) {
-                        var pointsPerLevel = config.get().getStatsPerLevel();
+                        int pointsPerLevel;
+                        if (config.get().isUseStatsPerLevelMapping()) {
+                            var mapping = StatsPerLevelMapping.loadOrCreate(LevelingCore.configPath);
+                            pointsPerLevel = mapping.getOrDefault(newLevel, 5);
+                        } else {
+                            pointsPerLevel = config.get().getStatsPerLevel();
+                        }
                         var totalFromLeveling = Math.max(5, newLevel * pointsPerLevel);
 
                         levelService.setAbilityPoints(playerId, totalFromLeveling);

@@ -157,6 +157,12 @@ public class GUIConfig {
             (exConfig, extraInfo) -> exConfig.statsPerLevel
         )
         .add()
+        .append(
+            new KeyedCodec<Boolean>("UseStatsPerLevelMapping", Codec.BOOLEAN),
+            (exConfig, aDouble, extraInfo) -> exConfig.useStatsPerLevelMapping = aDouble,
+            (exConfig, extraInfo) -> exConfig.useStatsPerLevelMapping
+        )
+        .add()
         .build();
 
     private boolean enableXPLossOnDeath = false;
@@ -206,6 +212,8 @@ public class GUIConfig {
     private boolean disableStatPointGainOnLevelUp = false;
 
     private int statsPerLevel = 5;
+
+    private boolean useStatsPerLevelMapping = false;
 
     public GUIConfig() {}
 
@@ -388,5 +396,9 @@ public class GUIConfig {
 
     public int getStatsPerLevel() {
         return statsPerLevel;
+    }
+
+    public boolean isUseStatsPerLevelMapping() {
+        return useStatsPerLevelMapping;
     }
 }
