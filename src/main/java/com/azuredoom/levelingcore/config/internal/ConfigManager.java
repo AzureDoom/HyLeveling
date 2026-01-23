@@ -61,7 +61,7 @@ public final class ConfigManager {
             var yaml = new Yaml(new Constructor(LevelingCoreConfig.class, opts));
             try (var reader = Files.newBufferedReader(configPath, StandardCharsets.UTF_8)) {
                 LevelingCoreConfig cfg = yaml.load(reader);
-                LevelingCore.LOGGER.at(Level.INFO).log("Loaded config from {0}", configPath);
+                LevelingCore.LOGGER.at(Level.INFO).log("Loaded config from " + configPath);
                 return (cfg != null) ? cfg : new LevelingCoreConfig();
             }
 
