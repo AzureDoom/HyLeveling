@@ -10,6 +10,7 @@ plugins {
 configurations {
     shadowBundle
     implementation.extendsFrom(shadowBundle)
+    vineflowerTool
 }
 
 javadoc {
@@ -41,9 +42,7 @@ repositories {
 dependencies {
     // Hytale server
     //compileOnly("com.hypixel.hytale:Server:2026.01.22-6f8bdbdc4")
-    //compileOnly("com.hypixel.hytale:Server:2026.01.22-6f8bdbdc4")
-    //compileOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
-    //runtimeOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
+    vineflowerTool("org.vineflower:vineflower:1.11.2")
     compileOnly("com.buuz135:MultipleHUD:1.0.3")
     runtimeOnly("com.buuz135:MultipleHUD:1.0.3")
     compileOnly fileTree(dir: "$rootDir/libs", include: ["*.jar"])
@@ -126,6 +125,67 @@ publishing {
         maven(MavenPublication) {
             artifactId base.archivesName.get()
             from components.java
+        }
+    }
+}
+
+tasks.register("decompileLibsWithVineflower") {
+    group = "decompilation"
+    description = "Decompile every .jar in /libs using Vineflower into build/vineflower/<jarName>/"
+
+    def libsDir = file("$rootDir/libs")
+    def outDir = file("$buildDir/vineflower")
+
+    inputs.dir(libsDir)
+    outputs.dir(outDir)
+
+    doLast {
+        if (!libsDir.exists()) {
+            logger.lifecycle("No /libs directory found at: ${libsDir}")
+            return
+        }
+
+        outDir.mkdirs()
+
+        def vineflowerJar = configurations.vineflowerTool.singleFile
+
+        def javaExe = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(java_version)
+        }.get().executablePath.asFile.absolutePath
+
+        def jars = fileTree(dir: libsDir, include: ["*.jar"]).files.toList()
+        if (jars.isEmpty()) {
+            logger.lifecycle("No .jar files found in ${libsDir}")
+            return
+        }
+
+        jars.each { jarFile ->
+            def jarBase = jarFile.name.replaceAll(/\.jar$/, "")
+            def jarOut = new File(outDir, jarBase)
+            jarOut.mkdirs()
+
+            def externals = jars.findAll { it != jarFile }.collectMany { ["-e", it.absolutePath] }
+
+            def cmd = [
+                    javaExe,
+                    "-jar", vineflowerJar.absolutePath,
+                    *externals,
+                    jarFile.absolutePath,
+                    jarOut.absolutePath
+            ]
+
+            logger.lifecycle("Running: ${cmd.join(' ')}")
+
+            def pb = new ProcessBuilder(cmd)
+            pb.directory(project.projectDir)
+            pb.redirectErrorStream(true)
+
+            def proc = pb.start()
+            proc.inputStream.withReader { r ->
+                r.eachLine { line -> logger.lifecycle(line) }
+            }
+
+            logger.lifecycle("Decompiled ${jarFile.name} -> ${jarOut}")
         }
     }
 }
