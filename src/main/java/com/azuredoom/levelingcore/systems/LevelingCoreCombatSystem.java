@@ -8,14 +8,11 @@ import com.hypixel.hytale.component.dependency.SystemGroupDependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
 import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.entity.EntityUtils;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageModule;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageSystems;
-import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -23,7 +20,6 @@ import com.hypixel.hytale.server.core.util.Config;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 
 import java.util.Set;
-import java.util.logging.Level;
 import javax.annotation.Nonnull;
 
 import com.azuredoom.levelingcore.LevelingCore;
@@ -86,7 +82,8 @@ public class LevelingCoreCombatSystem extends EntityEventSystem<EntityStore, Dam
             var level = levelService.getLevel(uuid);
 
             var itemHand = playerAttacker.getInventory().getItemInHand();
-            if (itemHand == null) return;
+            if (itemHand == null)
+                return;
             var itemId = itemHand.getItemId();
             if (itemId != null && !itemId.isBlank()) {
                 var requiredLevel = LevelingCore.itemLevelMapping.get(itemId);
@@ -146,23 +143,5 @@ public class LevelingCoreCombatSystem extends EntityEventSystem<EntityStore, Dam
     @Override
     public Query<EntityStore> getQuery() {
         return Archetype.empty();
-    }
-
-    private static float safeScaledDamage(float base, double mult, float min, float max) {
-        if (!Float.isFinite(base) || base <= 0f) return base;
-
-        if (!Double.isFinite(mult)) mult = 1.0;
-        mult = Math.max(0.0, Math.min(mult, 50.0)); // <= 50x cap (tune this)
-
-        var out = base * mult;
-
-        if (!Double.isFinite(out)) out = max;
-        var f = (float) out;
-
-        if (!Float.isFinite(f)) f = max;
-        if (f < min) f = min;
-        if (f > max) f = max;
-
-        return f;
     }
 }

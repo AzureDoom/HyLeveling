@@ -194,6 +194,12 @@ public class GUIConfig {
         )
         .add()
         .append(
+            new KeyedCodec<Float>("ConStatMultiplier", Codec.FLOAT),
+            (exConfig, aDouble, extraInfo) -> exConfig.conStatMultiplier = aDouble,
+            (exConfig, extraInfo) -> exConfig.conStatMultiplier
+        )
+        .add()
+        .append(
             new KeyedCodec<Boolean>("EnablePartyProXPShareCompat", Codec.BOOLEAN),
             (exConfig, aDouble, extraInfo) -> exConfig.enablePartyProXPShareCompat = aDouble,
             (exConfig, extraInfo) -> exConfig.enablePartyProXPShareCompat
@@ -294,6 +300,8 @@ public class GUIConfig {
     private float agiStatMultiplier = 0.25F;
 
     private float intStatMultiplier = 2.0F;
+
+    private float conStatMultiplier = 0.80F;
 
     private String levelMode = "NEARBY_PLAYERS_MEAN";
 
@@ -516,6 +524,10 @@ public class GUIConfig {
 
     public float getIntStatMultiplier() {
         return intStatMultiplier;
+    }
+
+    public float getConStatMultiplier() {
+        return conStatMultiplier;
     }
 
     public String getLevelMode() {

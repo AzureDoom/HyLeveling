@@ -1,6 +1,5 @@
 package com.azuredoom.levelingcore.systems;
 
-import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
@@ -14,29 +13,31 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageModule;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.core.util.Config;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.azuredoom.levelingcore.api.LevelingCoreApi;
+import com.azuredoom.levelingcore.config.GUIConfig;
+
 public class DamageFilter extends DamageEventSystem {
 
-    @Nullable
-    @Override
-    public SystemGroup<EntityStore> getGroup() {
-        return DamageModule.get().getFilterDamageGroup();
-    }
+    private Config<GUIConfig> config;
 
-    @Nonnull
-    @Override
-    public Query<EntityStore> getQuery() {
-        return AllLegacyLivingEntityTypesQuery.INSTANCE;
+    public DamageFilter(Config<GUIConfig> config) {
+        this.config = config;
     }
 
     @Override
-    public void handle(int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
-                       @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer,
-                       @Nonnull Damage damage) {
+    public void handle(
+        int index,
+        @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull CommandBuffer<EntityStore> commandBuffer,
+        @Nonnull Damage damage
+    ) {
         var isPlayer = archetypeChunk.getArchetype().contains(EntityModule.get().getPlayerComponentType());
         if (!isPlayer)
             return;
@@ -70,8 +71,20 @@ public class DamageFilter extends DamageEventSystem {
         damage.setAmount(incoming * mult);
     }
 
-    private static float conDamageMultiplier(int con) {
-        var reduction = (float) Math.min(0.80, Math.max(0.0, con));
+    @Nullable
+    @Override
+    public SystemGroup<EntityStore> getGroup() {
+        return DamageModule.get().getFilterDamageGroup();
+    }
+
+    @Nonnull
+    @Override
+    public Query<EntityStore> getQuery() {
+        return AllLegacyLivingEntityTypesQuery.INSTANCE;
+    }
+
+    private float conDamageMultiplier(int con) {
+        var reduction = (float) Math.min(config.get().getConStatMultiplier(), Math.max(0.0, con));
         return 1.0f - reduction;
     }
 }
