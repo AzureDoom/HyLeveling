@@ -1,3 +1,12 @@
+v0.8.1
+- Fixed log spamming on server join.
+- Fixed database not being created on first join due to a typo with intelligence mapping.
+- Added constitution stat.
+  - Reduces damage taken from mobs.
+- Reduced default mobDamageMultiplier to 0.25.
+- Fixed a bug where mobs with high levels would be undamageable after a hit or two. (hopefully)
+- Crocodile default xp adjusted
+
 v0.8.0
 - Implemented mob leveling.
 - Added a config option to set the mob LevelMode.
