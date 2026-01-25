@@ -225,6 +225,9 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         playerStatMap.putModifier(staminaIndex, staminaModifierKey, staminaModifier);
         playerStatMap.putModifier(oxygenIndex, oxygenModifierKey, oxygenModifier);
         playerStatMap.putModifier(manaIndex, manaModifierKey, manaModifier);
+        playerStatMap.maximizeStatValue(EntityStatMap.Predictable.SELF, DefaultEntityStatTypes.getHealth());
+        playerStatMap.maximizeStatValue(EntityStatMap.Predictable.SELF, DefaultEntityStatTypes.getStamina());
+        playerStatMap.maximizeStatValue(EntityStatMap.Predictable.SELF, DefaultEntityStatTypes.getMana());
 
         this.refreshUI();
     }
