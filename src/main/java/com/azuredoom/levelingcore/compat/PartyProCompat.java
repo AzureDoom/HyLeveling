@@ -3,8 +3,7 @@ package com.azuredoom.levelingcore.compat;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.util.Config;
-import me.tsumori.partypro.party.PartyInfo;
-import me.tsumori.partypro.party.PartyManager;
+import me.tsumori.partypro.api.PartyProAPI;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -25,9 +24,9 @@ public class PartyProCompat {
         Config<GUIConfig> config,
         PlayerRef playerRef
     ) {
-        var party = getPartyFromPlayer(playerUuid);
+        var party = PartyProAPI.getInstance().getPartyByPlayer(playerUuid);
         if (party != null && config.get().isEnablePartyProXPShareCompat()) {
-            Arrays.stream(party.getAllPartyMembers())
+            Arrays.stream(party.getAllMembers().toArray(new UUID[0]))
                 .distinct()
                 .forEach(uuid -> {
                     if (!config.get().isDisableXPGainNotification())
@@ -43,13 +42,7 @@ public class PartyProCompat {
         }
     }
 
-    private static PartyInfo getPartyFromPlayer(UUID playerUuid) {
-        return PartyManager.getInstance()
-            .getParties()
-            .values()
-            .stream()
-            .filter(partyInfo -> partyInfo.isLeaderOrMember(playerUuid))
-            .findFirst()
-            .orElse(null);
+    public static void showLvlOnHUD(UUID playerUuid, LevelServiceImpl levelService) {
+        PartyProAPI.getInstance().setPlayerCustomText1(playerUuid, "Lvl " + levelService.getLevel(playerUuid));
     }
 }
