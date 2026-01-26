@@ -27,7 +27,7 @@ import com.azuredoom.levelingcore.utils.MobLevelingUtil;
 
 public class LevelingCoreCombatSystem extends EntityEventSystem<EntityStore, Damage> {
 
-    private Config<GUIConfig> config;
+    private final Config<GUIConfig> config;
 
     public LevelingCoreCombatSystem(Config<GUIConfig> config) {
         super(Damage.class);
