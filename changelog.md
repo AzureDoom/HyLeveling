@@ -1,3 +1,14 @@
+v0.8.2
+- Fixed log spamming on projectiles hitting mobs.
+- Party Pro UI now shows the players level next to Player name.
+- Adds a new potion to the Alchemy bench, Reset Skills Potion
+  - Resets stat points allocated to 0 and adds them back to the pool.
+  - Recipe: Potion Bottle, Water Bucket, 5x Life Essence, 5x Fire Essence, 5x Ice Essence, 5x Void Essence, 5x Water Essence, 2x Apple
+- Health, Stamina, and Mana stats heal when stat points are used on respective stats.
+- Mana regenerates based on players' intelligence stat now.
+- Fixed damage increases in strength and perception stat increases not properly applying.
+- Adds missing config value for EnableItemLevelRestriction and it's uses for item level requirement checks.
+
 v0.8.1
 - Fixed log spamming on server join.
 - Fixed database not being created on first join due to a typo with intelligence mapping.

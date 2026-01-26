@@ -1,7 +1,7 @@
 {
     "Group": "levelingcore",
     "Name": "LevelingCore",
-    "Version": "0.8.1",
+    "Version": "0.8.2",
     "Description": " A modern, flexible leveling system for Hytale!",
     "Authors": [
         {
