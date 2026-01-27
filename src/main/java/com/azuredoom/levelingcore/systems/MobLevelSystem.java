@@ -1,6 +1,5 @@
 package com.azuredoom.levelingcore.systems;
 
-import com.azuredoom.levelingcore.utils.PendingUpdate;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
@@ -22,8 +21,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.level.formulas.loader.LevelTableLoader;
-import com.azuredoom.levelingcore.level.mobs.CoreLevelMode;
 import com.azuredoom.levelingcore.utils.MobLevelingUtil;
+import com.azuredoom.levelingcore.utils.PendingUpdate;
 
 @SuppressWarnings("removal")
 public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
@@ -108,11 +107,12 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
                 var store1 = u.store();
                 var data = u.data();
 
-                if (data.locked) continue;
+                if (data.locked)
+                    continue;
 
                 var newLevel = Math.max(
-                        1,
-                        Math.min(mobMaxLevel, MobLevelingUtil.computeDynamicLevel(config, npc, transform, store1))
+                    1,
+                    Math.min(mobMaxLevel, MobLevelingUtil.computeDynamicLevel(config, npc, transform, store1))
                 );
 
                 if (newLevel != data.level) {
@@ -143,7 +143,7 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
             case "LINEAR" -> internalConfig.formula.linear.maxLevel;
             case "TABLE" -> {
                 var tableFormula = LevelTableLoader.loadOrCreateFromDataDir(
-                        internalConfig.formula.table.file
+                    internalConfig.formula.table.file
                 );
                 yield Math.max(1, tableFormula.getMaxLevel());
             }
