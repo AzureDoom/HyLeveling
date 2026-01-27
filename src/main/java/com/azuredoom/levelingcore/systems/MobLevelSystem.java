@@ -1,5 +1,6 @@
 package com.azuredoom.levelingcore.systems;
 
+import com.azuredoom.levelingcore.level.mobs.CoreLevelMode;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
@@ -107,6 +108,10 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
             if (data.level != data.lastAppliedLevel) {
                 MobLevelingUtil.applyMobScaling(config, npc, data.level, store);
                 data.lastAppliedLevel = data.level;
+            }
+
+            if (config.get().getLevelMode().equalsIgnoreCase(CoreLevelMode.SPAWN_ONLY.name().toLowerCase(Locale.ROOT))) {
+                data.locked = true;
             }
         });
     }
