@@ -1,5 +1,6 @@
 package com.azuredoom.levelingcore.systems;
 
+import com.azuredoom.levelingcore.utils.PendingUpdate;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
@@ -14,6 +15,8 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.Locale;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.azuredoom.levelingcore.LevelingCore;
@@ -30,6 +33,12 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
     private static final long SAVE_INTERVAL_MS = 30_000;
 
     private static final long RECALC_INTERVAL_MS = 2_000;
+
+    private final ConcurrentLinkedQueue<PendingUpdate> pending = new ConcurrentLinkedQueue<>();
+
+    private final AtomicBoolean drainScheduled = new AtomicBoolean(false);
+
+    private static final int MAX_UPDATES_PER_DRAIN = 1000;
 
     private final Config<GUIConfig> config;
 
@@ -48,7 +57,7 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
         if (index == 0) {
             var nowMs = System.currentTimeMillis();
             var scheduled = nextSaveAtMs.get();
-            if (nowMs >= scheduled && nextSaveAtMs.compareAndSet(scheduled, nowMs + 30_000)) {
+            if (nowMs >= scheduled && nextSaveAtMs.compareAndSet(scheduled, nowMs + SAVE_INTERVAL_MS)) {
                 store.getExternalData().getWorld().execute(LevelingCore.mobLevelPersistence::save);
             }
         }
@@ -79,43 +88,68 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
 
         data.lastRecalcMs = nowMs;
 
-        store.getExternalData().getWorld().execute(() -> {
-            int mobMaxLevel;
-            var internalConfig = LevelingCore.levelingCoreConfig;
-            var type = internalConfig.formula.type.trim().toUpperCase(Locale.ROOT);
+        pending.add(new PendingUpdate(npc, transform, store, data));
 
-            switch (type) {
-                case "LINEAR" -> mobMaxLevel = internalConfig.formula.linear.maxLevel;
-                case "TABLE" -> {
-                    var tableFormula = LevelTableLoader.loadOrCreateFromDataDir(
-                        internalConfig.formula.table.file
-                    );
-                    mobMaxLevel = Math.max(1, tableFormula.getMaxLevel());
+        if (drainScheduled.compareAndSet(false, true)) {
+            store.getExternalData().getWorld().execute(() -> drainPending(store));
+        }
+    }
+
+    private void drainPending(@NonNullDecl Store<EntityStore> store) {
+        try {
+            var mobMaxLevel = computeMobMaxLevel();
+
+            var processed = 0;
+            PendingUpdate u;
+
+            while (processed < MAX_UPDATES_PER_DRAIN && (u = pending.poll()) != null) {
+                var npc = u.npc();
+                var transform = u.transform();
+                var store1 = u.store();
+                var data = u.data();
+
+                if (data.locked) continue;
+
+                var newLevel = Math.max(
+                        1,
+                        Math.min(mobMaxLevel, MobLevelingUtil.computeDynamicLevel(config, npc, transform, store1))
+                );
+
+                if (newLevel != data.level) {
+                    data.level = newLevel;
                 }
-                case "CUSTOM" -> mobMaxLevel = internalConfig.formula.custom.maxLevel;
-                default -> mobMaxLevel = internalConfig.formula.exponential.maxLevel;
-            }
 
-            var newLevel = Math.max(
-                1,
-                Math.min(mobMaxLevel, MobLevelingUtil.computeDynamicLevel(config, npc, transform, store))
-            );
+                if (data.level != data.lastAppliedLevel) {
+                    MobLevelingUtil.applyMobScaling(config, npc, data.level, store1);
+                    data.lastAppliedLevel = data.level;
+                }
 
-            if (newLevel != data.level) {
-                data.level = newLevel;
+                processed++;
             }
+        } finally {
+            drainScheduled.set(false);
 
-            if (data.level != data.lastAppliedLevel) {
-                MobLevelingUtil.applyMobScaling(config, npc, data.level, store);
-                data.lastAppliedLevel = data.level;
+            if (!pending.isEmpty() && drainScheduled.compareAndSet(false, true)) {
+                store.getExternalData().getWorld().execute(() -> drainPending(store));
             }
+        }
+    }
 
-            if (
-                config.get().getLevelMode().equalsIgnoreCase(CoreLevelMode.SPAWN_ONLY.name().toLowerCase(Locale.ROOT))
-            ) {
-                data.locked = true;
+    private int computeMobMaxLevel() {
+        var internalConfig = LevelingCore.levelingCoreConfig;
+        var type = internalConfig.formula.type.trim().toUpperCase(Locale.ROOT);
+
+        return switch (type) {
+            case "LINEAR" -> internalConfig.formula.linear.maxLevel;
+            case "TABLE" -> {
+                var tableFormula = LevelTableLoader.loadOrCreateFromDataDir(
+                        internalConfig.formula.table.file
+                );
+                yield Math.max(1, tableFormula.getMaxLevel());
             }
-        });
+            case "CUSTOM" -> internalConfig.formula.custom.maxLevel;
+            default -> internalConfig.formula.exponential.maxLevel;
+        };
     }
 
     @NullableDecl
