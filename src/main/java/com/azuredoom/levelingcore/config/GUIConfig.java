@@ -241,6 +241,12 @@ public class GUIConfig {
             (exConfig, extraInfo) -> exConfig.enableItemLevelRestriction
         )
         .add()
+        .append(
+            new KeyedCodec<Boolean>("EnableDeathRemovalNoAnimations", Codec.BOOLEAN),
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableDeathRemovalNoAnimations = aBoolean,
+            (exConfig, extraInfo) -> exConfig.enableDeathRemovalNoAnimations
+        )
+        .add()
         .build();
 
     private boolean enableXPLossOnDeath = false;
@@ -318,6 +324,8 @@ public class GUIConfig {
     private float mobRangeDamageMultiplier = 0.3F;
 
     private boolean enableItemLevelRestriction = false;
+
+    private boolean enableDeathRemovalNoAnimations = false;
 
     public GUIConfig() {}
 
@@ -556,5 +564,9 @@ public class GUIConfig {
 
     public boolean isEnableItemLevelRestriction() {
         return enableItemLevelRestriction;
+    }
+
+    public boolean isEnableDeathRemovalNoAnimations() {
+        return enableDeathRemovalNoAnimations;
     }
 }
