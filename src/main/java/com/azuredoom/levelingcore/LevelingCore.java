@@ -1,6 +1,7 @@
 package com.azuredoom.levelingcore;
 
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -12,6 +13,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.*;
 import javax.annotation.Nonnull;
 
@@ -35,6 +38,7 @@ import com.azuredoom.levelingcore.level.rewards.RewardEntry;
 import com.azuredoom.levelingcore.level.stats.StatsPerLevelMapping;
 import com.azuredoom.levelingcore.level.xp.XPValues;
 import com.azuredoom.levelingcore.systems.*;
+import com.azuredoom.levelingcore.systems.nameplate.ShowLvlHeadSystem;
 import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.utils.HudPlayerReady;
 import com.azuredoom.levelingcore.utils.LevelDownListenerRegistrar;
@@ -82,6 +86,8 @@ public class LevelingCore extends JavaPlugin {
     public static final MobLevelRegistry mobLevelRegistry = new MobLevelRegistry();
 
     public static final MobLevelPersistence mobLevelPersistence = new MobLevelPersistence();
+
+    private ShowLvlHeadSystem showLvlHeadSystem;
 
     /**
      * Constructs a new {@code LevelingCore} instance and initializes the core components of the leveling system. This
@@ -152,6 +158,13 @@ public class LevelingCore extends JavaPlugin {
                 LevelUpListenerRegistrar.clear(event.getPlayerRef().getUuid());
                 LevelDownListenerRegistrar.clear(event.getPlayerRef().getUuid());
             });
+
+        this.showLvlHeadSystem = new ShowLvlHeadSystem(config);
+        this.getTaskRegistry()
+            .registerTask(
+                (ScheduledFuture<Void>) HytaleServer.SCHEDULED_EXECUTOR
+                    .scheduleAtFixedRate(this.showLvlHeadSystem, 0L, 250L, TimeUnit.MILLISECONDS)
+            );
         LevelingCore.mobLevelPersistence.load();
     }
 

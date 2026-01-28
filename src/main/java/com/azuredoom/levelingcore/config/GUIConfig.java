@@ -253,6 +253,18 @@ public class GUIConfig {
             (exConfig, extraInfo) -> exConfig.enableXPBarUI
         )
         .add()
+        .append(
+            new KeyedCodec<Boolean>("ShowPlayerLvls", Codec.BOOLEAN),
+            (exConfig, aBoolean, extraInfo) -> exConfig.showPlayerLvls = aBoolean,
+            (exConfig, extraInfo) -> exConfig.showPlayerLvls
+        )
+        .add()
+        .append(
+            new KeyedCodec<Boolean>("ShowMobLvls", Codec.BOOLEAN),
+            (exConfig, aBoolean, extraInfo) -> exConfig.showMobLvls = aBoolean,
+            (exConfig, extraInfo) -> exConfig.showMobLvls
+        )
+        .add()
         .build();
 
     private boolean enableXPLossOnDeath = false;
@@ -334,6 +346,10 @@ public class GUIConfig {
     private boolean enableDeathRemovalNoAnimations = false;
 
     private boolean enableXPBarUI = true;
+
+    private boolean showPlayerLvls = true;
+
+    private boolean showMobLvls = true;
 
     public GUIConfig() {}
 
@@ -580,5 +596,13 @@ public class GUIConfig {
 
     public boolean isEnableXPBarUI() {
         return enableXPBarUI;
+    }
+
+    public boolean isShowPlayerLvls() {
+        return showPlayerLvls;
+    }
+
+    public boolean isShowMobLvls() {
+        return showMobLvls;
     }
 }
