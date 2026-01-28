@@ -24,7 +24,9 @@ public class HudPlayerReady {
         var ref = event.getPlayerRef();
         var store = ref.getStore();
         var world = store.getExternalData().getWorld();
-
+        
+        if (!config.get().isEnableXPBarUI())
+            return;
         world.execute(() -> LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService1 -> {
             var playerRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (playerRef == null)

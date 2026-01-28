@@ -41,6 +41,8 @@ public class XPBarHud extends CustomUIHud {
     }
 
     public void update(UICommandBuilder uiCommandBuilder) {
+        if (!config.get().isEnableXPBarUI())
+            return;
         var uuid = getPlayerRef().getUuid();
         var currentXp = levelServiceImpl.getXp(uuid);
         var currentLevel = levelServiceImpl.getLevel(uuid);

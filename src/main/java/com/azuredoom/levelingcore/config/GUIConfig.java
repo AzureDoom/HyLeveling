@@ -247,6 +247,12 @@ public class GUIConfig {
             (exConfig, extraInfo) -> exConfig.enableDeathRemovalNoAnimations
         )
         .add()
+        .append(
+            new KeyedCodec<Boolean>("EnableXPBarUI", Codec.BOOLEAN),
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableXPBarUI = aBoolean,
+            (exConfig, extraInfo) -> exConfig.enableXPBarUI
+        )
+        .add()
         .build();
 
     private boolean enableXPLossOnDeath = false;
@@ -326,6 +332,8 @@ public class GUIConfig {
     private boolean enableItemLevelRestriction = false;
 
     private boolean enableDeathRemovalNoAnimations = false;
+
+    private boolean enableXPBarUI = true;
 
     public GUIConfig() {}
 
@@ -568,5 +576,9 @@ public class GUIConfig {
 
     public boolean isEnableDeathRemovalNoAnimations() {
         return enableDeathRemovalNoAnimations;
+    }
+
+    public boolean isEnableXPBarUI() {
+        return enableXPBarUI;
     }
 }
