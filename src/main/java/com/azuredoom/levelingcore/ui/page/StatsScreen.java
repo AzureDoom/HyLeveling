@@ -112,7 +112,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#AGI.TextSpans",
-            CommandLang.AGI.param("points", levelServiceImpl.getStr(playerRef.getUuid()))
+            CommandLang.AGI.param("points", levelServiceImpl.getAgi(playerRef.getUuid()))
         );
         uiCommandBuilder.set(
             "#AGIDescription.TextSpans",
@@ -120,7 +120,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#PER.TextSpans",
-            CommandLang.PER.param("points", levelServiceImpl.getStr(playerRef.getUuid()))
+            CommandLang.PER.param("points", levelServiceImpl.getPer(playerRef.getUuid()))
         );
         uiCommandBuilder.set(
             "#PERDescription.TextSpans",
@@ -128,7 +128,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#VIT.TextSpans",
-            CommandLang.VIT.param("points", levelServiceImpl.getStr(playerRef.getUuid()))
+            CommandLang.VIT.param("points", levelServiceImpl.getVit(playerRef.getUuid()))
         );
         uiCommandBuilder.set(
             "#VITDescription.TextSpans",
@@ -136,7 +136,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#INT.TextSpans",
-            CommandLang.INT.param("points", levelServiceImpl.getStr(playerRef.getUuid()))
+            CommandLang.INT.param("points", levelServiceImpl.getInt(playerRef.getUuid()))
         );
         uiCommandBuilder.set(
             "#INTDescription.TextSpans",
@@ -144,7 +144,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#CON.TextSpans",
-            CommandLang.CON.param("points", levelServiceImpl.getStr(playerRef.getUuid()))
+            CommandLang.CON.param("points", levelServiceImpl.getCon(playerRef.getUuid()))
         );
         uiCommandBuilder.set(
             "#CONDescription.TextSpans",
