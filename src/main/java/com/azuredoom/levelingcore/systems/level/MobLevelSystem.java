@@ -1,4 +1,4 @@
-package com.azuredoom.levelingcore.systems;
+package com.azuredoom.levelingcore.systems.level;
 
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -164,9 +164,9 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
     @Override
     public Query<EntityStore> getQuery() {
         return Query.and(
-                NPCEntity.getComponentType(),
-                TransformComponent.getComponentType(),
-                EntityStatMap.getComponentType()
+            NPCEntity.getComponentType(),
+            TransformComponent.getComponentType(),
+            EntityStatMap.getComponentType()
         );
     }
 }

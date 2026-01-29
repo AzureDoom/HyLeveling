@@ -1,5 +1,6 @@
-package com.azuredoom.levelingcore.systems;
+package com.azuredoom.levelingcore.systems.xp;
 
+import com.hypixel.hytale.component.Archetype;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -33,7 +34,7 @@ public class LossXPEventSystem extends DeathSystems.OnDeathSystem {
 
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.any();
+        return Archetype.of(DeathComponent.getComponentType());
     }
 
     @Override

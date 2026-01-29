@@ -6,7 +6,6 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
-import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
@@ -21,12 +20,6 @@ import com.azuredoom.levelingcore.config.GUIConfig;
 public class StatsUtils {
 
     private StatsUtils() {}
-
-    private static @NullableDecl World getWorld(Player player) {
-        if (player == null)
-            return null;
-        return player.getWorld();
-    }
 
     private static @NullableDecl EntityStatMap getStatMap(@NonNullDecl Store<EntityStore> store, Player player) {
         if (store == null || player == null || player.getReference() == null) {

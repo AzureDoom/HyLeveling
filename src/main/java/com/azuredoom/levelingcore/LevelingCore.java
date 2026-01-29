@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.*;
 import javax.annotation.Nonnull;
@@ -37,8 +37,14 @@ import com.azuredoom.levelingcore.level.rewards.LevelRewards;
 import com.azuredoom.levelingcore.level.rewards.RewardEntry;
 import com.azuredoom.levelingcore.level.stats.StatsPerLevelMapping;
 import com.azuredoom.levelingcore.level.xp.XPValues;
-import com.azuredoom.levelingcore.systems.*;
+import com.azuredoom.levelingcore.systems.damage.MobDamageFilter;
+import com.azuredoom.levelingcore.systems.damage.PlayerDamageFilter;
+import com.azuredoom.levelingcore.systems.level.LevelDownTickingSystem;
+import com.azuredoom.levelingcore.systems.level.LevelUpTickingSystem;
+import com.azuredoom.levelingcore.systems.level.MobLevelSystem;
 import com.azuredoom.levelingcore.systems.nameplate.ShowLvlHeadSystem;
+import com.azuredoom.levelingcore.systems.xp.GainXPEventSystem;
+import com.azuredoom.levelingcore.systems.xp.LossXPEventSystem;
 import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.utils.HudPlayerReady;
 import com.azuredoom.levelingcore.utils.LevelDownListenerRegistrar;
@@ -87,8 +93,6 @@ public class LevelingCore extends JavaPlugin {
 
     public static final MobLevelPersistence mobLevelPersistence = new MobLevelPersistence();
 
-    private ShowLvlHeadSystem showLvlHeadSystem;
-
     /**
      * Constructs a new {@code LevelingCore} instance and initializes the core components of the leveling system. This
      * constructor takes a non-null {@link JavaPluginInit} object to set up the necessary dependencies and
@@ -124,7 +128,6 @@ public class LevelingCore extends JavaPlugin {
                 PlayerReadyEvent.class,
                 (playerReadyEvent -> {
                     var player = playerReadyEvent.getPlayer();
-                    var store = playerReadyEvent.getPlayerRef().getStore();
                     if (player != null) {
                         LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService -> {
                             var uuid = player.getUuid();
@@ -158,10 +161,23 @@ public class LevelingCore extends JavaPlugin {
                 LevelDownListenerRegistrar.clear(event.getPlayerRef().getUuid());
             });
 
-        this.showLvlHeadSystem = new ShowLvlHeadSystem(config);
-        ScheduledFuture<Void> showLvlTask = (ScheduledFuture<Void>) HytaleServer.SCHEDULED_EXECUTOR
-            .scheduleAtFixedRate(this.showLvlHeadSystem, 0L, 250L, TimeUnit.MILLISECONDS);
-        this.getTaskRegistry().registerTask(showLvlTask);
+        var showLvlHeadSystem = new ShowLvlHeadSystem(config);
+        var scheduled =
+            HytaleServer.SCHEDULED_EXECUTOR.scheduleWithFixedDelay(
+                showLvlHeadSystem,
+                0L,
+                250L,
+                TimeUnit.MILLISECONDS
+            );
+        var task = new CompletableFuture<Void>() {
+
+            @Override
+            public boolean cancel(boolean mayInterruptIfRunning) {
+                scheduled.cancel(mayInterruptIfRunning);
+                return super.cancel(mayInterruptIfRunning);
+            }
+        };
+        this.getTaskRegistry().registerTask(task);
         LevelingCore.mobLevelPersistence.load();
     }
 

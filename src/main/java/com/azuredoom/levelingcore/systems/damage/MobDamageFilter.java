@@ -1,11 +1,9 @@
-package com.azuredoom.levelingcore.systems;
+package com.azuredoom.levelingcore.systems.damage;
 
-import com.hypixel.hytale.component.ArchetypeChunk;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.component.SystemGroup;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.entity.EntityUtils;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.AllLegacyLivingEntityTypesQuery;
 import com.hypixel.hytale.server.core.modules.entity.EntityModule;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
@@ -22,14 +20,13 @@ import javax.annotation.Nullable;
 import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.config.GUIConfig;
-import com.azuredoom.levelingcore.utils.MobLevelingUtil;
+import com.azuredoom.levelingcore.lang.CommandLang;
 
-@SuppressWarnings("removal")
-public class PlayerDamageFilter extends DamageEventSystem {
+public class MobDamageFilter extends DamageEventSystem {
 
     private Config<GUIConfig> config;
 
-    public PlayerDamageFilter(Config<GUIConfig> config) {
+    public MobDamageFilter(Config<GUIConfig> config) {
         this.config = config;
     }
 
@@ -42,11 +39,11 @@ public class PlayerDamageFilter extends DamageEventSystem {
         @Nonnull Damage damage
     ) {
         var isPlayer = archetypeChunk.getArchetype().contains(EntityModule.get().getPlayerComponentType());
-        if (!isPlayer)
+        if (isPlayer)
             return;
         var holder = EntityUtils.toHolder(index, archetypeChunk);
-        var victimPlayerRef = holder.getComponent(PlayerRef.getComponentType());
-        if (victimPlayerRef == null || !(victimPlayerRef instanceof PlayerRef))
+        var victimNPCRef = holder.getComponent(NPCEntity.getComponentType());
+        if (victimNPCRef == null || !(victimNPCRef instanceof NPCEntity))
             return;
         if (!(damage.getSource() instanceof Damage.EntitySource entitySource))
             return;
@@ -54,8 +51,8 @@ public class PlayerDamageFilter extends DamageEventSystem {
         if (attackerRef == null || !attackerRef.isValid())
             return;
 
-        var npcAttacker = store.getComponent(attackerRef, NPCEntity.getComponentType());
-        if (npcAttacker == null)
+        var playerRefAttacker = store.getComponent(attackerRef, PlayerRef.getComponentType());
+        if (playerRefAttacker == null)
             return;
 
         var levelServiceOpt = LevelingCoreApi.getLevelServiceIfPresent();
@@ -67,7 +64,29 @@ public class PlayerDamageFilter extends DamageEventSystem {
         var incoming = damage.getAmount();
         if (incoming <= 0f)
             return;
+        if (config.get().isEnableItemLevelRestriction()) {
+            var playerAttacker = store.getComponent(attackerRef, Player.getComponentType());
+            if (playerAttacker == null)
+                return;
 
+            var level = levelService.getLevel(playerRefAttacker.getUuid());
+            var itemHand = playerAttacker.getInventory().getItemInHand();
+            if (itemHand == null)
+                return;
+            var itemId = itemHand.getItemId();
+            if (itemId != null && !itemId.isBlank()) {
+                var requiredLevel = LevelingCore.itemLevelMapping.get(itemId);
+                if (requiredLevel != null && level < requiredLevel) {
+                    playerRefAttacker.sendMessage(
+                        CommandLang.LEVEL_REQUIRED.param("requiredlevel", requiredLevel)
+                            .param("itemid", itemId)
+                            .param("level", level)
+                    );
+                    damage.setCancelled(true);
+                    return;
+                }
+            }
+        }
         var cause = damage.getCause();
         if (cause == null)
             return;
@@ -76,21 +95,16 @@ public class PlayerDamageFilter extends DamageEventSystem {
         var causeIdLower = causeId == null ? "" : causeId.toLowerCase();
         var isProjectile = causeIdLower.contains("projectile") || causeIdLower.contains("arrow");
 
-        var mobLevelData = LevelingCore.mobLevelRegistry.getOrCreate(
-            npcAttacker.getUuid(),
-            () -> MobLevelingUtil.computeSpawnLevel(npcAttacker)
-        );
-        var mobLevel = mobLevelData.level;
-        var meleeMulti = config.get().getMobDamageMultiplier();
-        var projectileMulti = config.get().getMobRangeDamageMultiplier();
-
-        var con = levelService.getCon(victimPlayerRef.getUuid());
-        var mult = conDamageMultiplier(con);
-
         if (isProjectile) {
-            damage.setAmount(incoming * mult * projectileMulti * mobLevel);
+            var per = levelService.getPer(playerRefAttacker.getUuid());
+            damage.setAmount(
+                Math.round((float) (damage.getAmount() * (1.0 + per * config.get().getPerStatMultiplier())))
+            );
         } else {
-            damage.setAmount(incoming * mult * meleeMulti * mobLevel);
+            var str = levelService.getStr(playerRefAttacker.getUuid());
+            damage.setAmount(
+                Math.round((float) (damage.getAmount() * (1.0 + str * config.get().getStrStatMultiplier())))
+            );
         }
     }
 
@@ -104,10 +118,5 @@ public class PlayerDamageFilter extends DamageEventSystem {
     @Override
     public Query<EntityStore> getQuery() {
         return AllLegacyLivingEntityTypesQuery.INSTANCE;
-    }
-
-    private float conDamageMultiplier(int con) {
-        var reduction = (float) Math.min(config.get().getConStatMultiplier(), Math.max(0.0, con));
-        return 1.0f - reduction;
     }
 }

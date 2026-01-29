@@ -1,6 +1,7 @@
-package com.azuredoom.levelingcore.systems;
+package com.azuredoom.levelingcore.systems.xp;
 
 import com.hypixel.hytale.common.plugin.PluginIdentifier;
+import com.hypixel.hytale.component.Archetype;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -27,8 +28,8 @@ import com.azuredoom.levelingcore.compat.PartyProCompat;
 import com.azuredoom.levelingcore.compat.SimplePartyCompat;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.lang.CommandLang;
-import com.azuredoom.levelingcore.level.mobs.PersistedMobLevel;
 import com.azuredoom.levelingcore.ui.hud.XPBarHud;
+import com.azuredoom.levelingcore.utils.MobLevelingUtil;
 import com.azuredoom.levelingcore.utils.NotificationsUtil;
 
 /**
@@ -55,7 +56,7 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
 
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.any();
+        return Archetype.of(DeathComponent.getComponentType());
     }
 
     @Override
@@ -99,9 +100,14 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                 var playerLevel = LevelingCoreApi.getLevelServiceIfPresent()
                     .map(levelService -> levelService.getLevel(player.getUuid()))
                     .orElse(0);
-                var mobLevel = LevelingCore.mobLevelPersistence.get(entity.getUuid())
-                    .map(PersistedMobLevel::spawnLevel)
-                    .orElse(1);
+                var mobLevel = LevelingCore.mobLevelRegistry.getOrCreateWithPersistence(
+                    entity.getUuid(),
+                    () -> MobLevelingUtil.computeSpawnLevel(entity),
+                    0,
+                    LevelingCore.mobLevelPersistence
+                );
+                if (mobLevel == null)
+                    return;
                 var xpAmountHealth = Math.max(1, (long) (maxHealth * this.config.get().getDefaultXPGainPercentage()));
                 var getXPMapping = xpMap.getOrDefault(entity.getNPCTypeId(), Math.toIntExact(xpAmountHealth));
                 var xpAmount = config.get().isUseConfigXPMappingsInsteadOfHealthDefaults()
@@ -110,7 +116,7 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                 final var levelWindow = 5;
                 final var maxBonusMult = 1.25;
 
-                int diff = Math.abs(playerLevel - mobLevel);
+                int diff = Math.abs(playerLevel - mobLevel.level);
                 if (diff <= levelWindow) {
                     var t = 1.0 - (diff / (double) levelWindow);
                     var mult = 1.0 + (maxBonusMult - 1.0) * t;

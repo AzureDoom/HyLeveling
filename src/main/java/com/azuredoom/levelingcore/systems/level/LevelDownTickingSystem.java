@@ -1,4 +1,4 @@
-package com.azuredoom.levelingcore.systems;
+package com.azuredoom.levelingcore.systems.level;
 
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -15,13 +15,13 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import com.azuredoom.levelingcore.config.GUIConfig;
-import com.azuredoom.levelingcore.utils.LevelUpListenerRegistrar;
+import com.azuredoom.levelingcore.utils.LevelDownListenerRegistrar;
 
-public class LevelUpTickingSystem extends EntityTickingSystem<EntityStore> {
+public class LevelDownTickingSystem extends EntityTickingSystem<EntityStore> {
 
     private final Config<GUIConfig> config;
 
-    public LevelUpTickingSystem(Config<GUIConfig> config) {
+    public LevelDownTickingSystem(Config<GUIConfig> config) {
         this.config = config;
     }
 
@@ -39,7 +39,7 @@ public class LevelUpTickingSystem extends EntityTickingSystem<EntityStore> {
         if (player == null || playerRef == null) {
             return;
         }
-        LevelUpListenerRegistrar.ensureRegistered(store, player, playerRef, config);
+        LevelDownListenerRegistrar.ensureRegistered(store, player, playerRef, config);
     }
 
     @NullableDecl
