@@ -17,6 +17,8 @@ import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.utils.MobLevelingUtil;
 
+import java.util.regex.Pattern;
+
 public class ShowLvlHeadSystem implements Runnable {
 
     private final Config<GUIConfig> config;
@@ -60,7 +62,7 @@ public class ShowLvlHeadSystem implements Runnable {
                         continue;
 
                     var lvl = levelingService.getLevel(playerRef.getUuid());
-                    upsertNameplate(commandBuffer, ref, formatNameplate(playerRef.getUsername(), lvl));
+                    upsertNameplate(commandBuffer, ref, formatNameplate(lvl));
                 }
             });
         }
@@ -85,7 +87,7 @@ public class ShowLvlHeadSystem implements Runnable {
                     if (lvl == null)
                         continue;
 
-                    var text = formatNameplate("", lvl.level);
+                    var text = formatNameplate(lvl.level);
                     upsertNameplate(commandBuffer, ref, text);
                 }
             });
@@ -112,22 +114,22 @@ public class ShowLvlHeadSystem implements Runnable {
                 return;
             }
             var old = current.getText();
-            if (desiredText.equals(old)) {
+            final Pattern LEVEL_PATTERN = Pattern.compile("\\s*\\[Lvl \\d+]\\s*$");
+            var base = LEVEL_PATTERN.matcher(old).replaceAll("");
+            var newText = base + " " + desiredText;
+            if (newText.equals(old)) {
                 return;
             }
-            current.setText(desiredText);
-            commandBuffer.putComponent(ref, Nameplate.getComponentType(), current);
-            return;
-        }
 
-        if (healthValue.get() > 0)
+            current.setText(newText);
+            if (healthValue.get() > 0)
+                commandBuffer.putComponent(ref, Nameplate.getComponentType(), current);
+        } else if (healthValue.get() > 0) {
             commandBuffer.putComponent(ref, Nameplate.getComponentType(), new Nameplate(desiredText));
+        }
     }
 
-    private String formatNameplate(String name, int level) {
-        if (name != null && !name.isBlank()) {
-            return name + "'s Lvl " + level;
-        }
-        return "Lvl " + level;
+    private String formatNameplate(int level) {
+        return " [Lvl " + level + "]";
     }
 }
