@@ -40,9 +40,10 @@ public class SimplePartyCompat {
             Arrays.stream(party.getAllPartyMembers())
                 .distinct()
                 .forEach(uuid -> {
-                    if (!config.get().isDisableXPGainNotification())
+                    var player = Universe.get().getPlayer(uuid);
+                    if (!config.get().isDisableXPGainNotification() && player != null)
                         NotificationsUtil.sendNotification(
-                            Universe.get().getPlayer(uuid),
+                            player,
                             CommandLang.GAINED.param("xp", xp)
                         );
                     levelService.addXp(uuid, xp);
