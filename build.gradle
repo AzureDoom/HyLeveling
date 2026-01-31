@@ -304,7 +304,8 @@ if (keyPropsFile.exists()) {
             def optionalDeps = [
                     "partypro",
                     "party-info",
-                    "better-modlist"
+                    "better-modlist",
+                    "update-checker"
             ]
 
             def dependencies = []
