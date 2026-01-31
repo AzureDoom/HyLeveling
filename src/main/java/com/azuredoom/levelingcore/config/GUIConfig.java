@@ -15,7 +15,7 @@ public class GUIConfig {
     public static final BuilderCodec<GUIConfig> CODEC = BuilderCodec.builder(GUIConfig.class, GUIConfig::new)
         .append(
             new KeyedCodec<Boolean>("EnableXPLossOnDeath", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableXPLossOnDeath = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableXPLossOnDeath = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableXPLossOnDeath
         )
         .add()
@@ -33,79 +33,79 @@ public class GUIConfig {
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableDefaultXPGainSystem", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableDefaultXPGainSystem = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableDefaultXPGainSystem = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableDefaultXPGainSystem
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableLevelDownOnDeath", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableLevelDownOnDeath = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableLevelDownOnDeath = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableLevelDownOnDeath
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableAllLevelsLostOnDeath", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableAllLevelsLostOnDeath = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableAllLevelsLostOnDeath = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableAllLevelsLostOnDeath
         )
         .add()
         .append(
             new KeyedCodec<Integer>("MinLevelForLevelDown", Codec.INTEGER),
-            (exConfig, aDouble, extraInfo) -> exConfig.minLevelForLevelDown = aDouble,
+            (exConfig, aInteger, extraInfo) -> exConfig.minLevelForLevelDown = aInteger,
             (exConfig, extraInfo) -> exConfig.minLevelForLevelDown
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableLevelChatMsgs", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableLevelChatMsgs = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableLevelChatMsgs = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableLevelChatMsgs
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("DisableXPGainNotification", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.disableXPGainNotification = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.disableXPGainNotification = aBoolean,
             (exConfig, extraInfo) -> exConfig.disableXPGainNotification
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableLevelAndXPTitles", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableLevelAndXPTitles = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableLevelAndXPTitles = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableLevelAndXPTitles
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("ShowXPAmountInHUD", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.showXPAmountInHUD = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.showXPAmountInHUD = aBoolean,
             (exConfig, extraInfo) -> exConfig.showXPAmountInHUD
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableStatLeveling", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableStatLeveling = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableStatLeveling = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableStatLeveling
         )
         .add()
         .append(
             new KeyedCodec<Float>("HealthLevelUpMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.healthLevelUpMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.healthLevelUpMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.healthLevelUpMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("StaminaLevelUpMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.staminaLevelUpMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.staminaLevelUpMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.staminaLevelUpMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("ManaLevelUpMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.manaLevelUpMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.manaLevelUpMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.manaLevelUpMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableStatHealing", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableStatHealing = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableStatHealing = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableStatHealing
         )
         .add()
@@ -123,79 +123,79 @@ public class GUIConfig {
         .add()
         .append(
             new KeyedCodec<Boolean>("UseConfigXPMappingsInsteadOfHealthDefaults", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.useConfigXPMappingsInsteadOfHealthDefaults = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.useConfigXPMappingsInsteadOfHealthDefaults = aBoolean,
             (exConfig, extraInfo) -> exConfig.useConfigXPMappingsInsteadOfHealthDefaults
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnableLevelUpRewardsConfig", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enableLevelUpRewardsConfig = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enableLevelUpRewardsConfig = aBoolean,
             (exConfig, extraInfo) -> exConfig.enableLevelUpRewardsConfig
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("DisableStatPointGainOnLevelUp", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.disableStatPointGainOnLevelUp = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.disableStatPointGainOnLevelUp = aBoolean,
             (exConfig, extraInfo) -> exConfig.disableStatPointGainOnLevelUp
         )
         .add()
         .append(
             new KeyedCodec<Integer>("StatsPerLevel", Codec.INTEGER),
-            (exConfig, aDouble, extraInfo) -> exConfig.statsPerLevel = aDouble,
+            (exConfig, aInteger, extraInfo) -> exConfig.statsPerLevel = aInteger,
             (exConfig, extraInfo) -> exConfig.statsPerLevel
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("UseStatsPerLevelMapping", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.useStatsPerLevelMapping = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.useStatsPerLevelMapping = aBoolean,
             (exConfig, extraInfo) -> exConfig.useStatsPerLevelMapping
         )
         .add()
         .append(
             new KeyedCodec<Float>("StrStatMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.strStatMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.strStatMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.strStatMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("PerStatMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.perStatMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.perStatMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.perStatMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("VitStatMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.vitStatMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.vitStatMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.vitStatMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("AgiStatMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.agiStatMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.agiStatMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.agiStatMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("IntStatMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.intStatMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.intStatMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.intStatMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("ConStatMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.conStatMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.conStatMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.conStatMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnablePartyProXPShareCompat", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enablePartyProXPShareCompat = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enablePartyProXPShareCompat = aBoolean,
             (exConfig, extraInfo) -> exConfig.enablePartyProXPShareCompat
         )
         .add()
         .append(
             new KeyedCodec<Boolean>("EnablePartyPluginXPShareCompat", Codec.BOOLEAN),
-            (exConfig, aDouble, extraInfo) -> exConfig.enablePartyPluginXPShareCompat = aDouble,
+            (exConfig, aBoolean, extraInfo) -> exConfig.enablePartyPluginXPShareCompat = aBoolean,
             (exConfig, extraInfo) -> exConfig.enablePartyPluginXPShareCompat
         )
         .add()
@@ -231,25 +231,25 @@ public class GUIConfig {
         .add()
         .append(
             new KeyedCodec<String>("LevelMode", Codec.STRING),
-            (exConfig, aDouble, extraInfo) -> exConfig.levelMode = aDouble,
+            (exConfig, aString, extraInfo) -> exConfig.levelMode = aString,
             (exConfig, extraInfo) -> exConfig.levelMode
         )
         .add()
         .append(
             new KeyedCodec<Float>("MobHealthMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.mobHealthMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.mobHealthMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.mobHealthMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("MobDamageMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.mobDamageMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.mobDamageMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.mobDamageMultiplier
         )
         .add()
         .append(
             new KeyedCodec<Float>("MobRangeDamageMultiplier", Codec.FLOAT),
-            (exConfig, aDouble, extraInfo) -> exConfig.mobRangeDamageMultiplier = aDouble,
+            (exConfig, aFloat, extraInfo) -> exConfig.mobRangeDamageMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.mobRangeDamageMultiplier
         )
         .add()
