@@ -45,53 +45,48 @@ public class ShowLvlHeadSystem implements Runnable {
         if (store == null)
             return;
 
-        if (config.get().isShowPlayerLvls()) {
-            var levelingServiceOpt = LevelingCoreApi.getLevelServiceIfPresent();
-            if (levelingServiceOpt.isEmpty())
-                return;
+        var levelingServiceOpt = LevelingCoreApi.getLevelServiceIfPresent();
+        if (levelingServiceOpt.isEmpty())
+            return;
 
-            var levelingService = levelingServiceOpt.get();
+        var levelingService = levelingServiceOpt.get();
 
-            store.forEachChunk(PlayerRef.getComponentType(), (chunk, commandBuffer) -> {
-                var size = chunk.size();
-                for (var i = 0; i < size; i++) {
-                    var ref = chunk.getReferenceTo(i);
+        store.forEachChunk(PlayerRef.getComponentType(), (chunk, commandBuffer) -> {
+            var size = chunk.size();
+            for (var i = 0; i < size; i++) {
+                var ref = chunk.getReferenceTo(i);
 
-                    var playerRef = commandBuffer.getComponent(ref, PlayerRef.getComponentType());
-                    if (playerRef == null)
-                        continue;
+                var playerRef = commandBuffer.getComponent(ref, PlayerRef.getComponentType());
+                if (playerRef == null)
+                    continue;
 
-                    var lvl = levelingService.getLevel(playerRef.getUuid());
-                    insertNameplate(commandBuffer, ref, formatNameplate(lvl));
-                }
-            });
-        }
+                int lvl = levelingService.getLevel(playerRef.getUuid());
+                insertNameplate(commandBuffer, ref, formatNameplate(config.get().isShowPlayerLvls() ? lvl : 0));
+            }
+        });
+        store.forEachChunk(NPCEntity.getComponentType(), (chunk, commandBuffer) -> {
+            var size = chunk.size();
+            for (var i = 0; i < size; i++) {
+                var ref = chunk.getReferenceTo(i);
 
-        if (config.get().isShowMobLvls()) {
-            store.forEachChunk(NPCEntity.getComponentType(), (chunk, commandBuffer) -> {
-                var size = chunk.size();
-                for (var i = 0; i < size; i++) {
-                    var ref = chunk.getReferenceTo(i);
+                var npc = commandBuffer.getComponent(ref, NPCEntity.getComponentType());
+                if (npc == null)
+                    continue;
 
-                    var npc = commandBuffer.getComponent(ref, NPCEntity.getComponentType());
-                    if (npc == null)
-                        continue;
+                final var entityId = npc.getUuid();
+                var lvl = LevelingCore.mobLevelRegistry.getOrCreateWithPersistence(
+                    entityId,
+                    () -> MobLevelingUtil.computeSpawnLevel(npc),
+                    0,
+                    LevelingCore.mobLevelPersistence
+                );
+                if (lvl == null)
+                    continue;
 
-                    final var entityId = npc.getUuid();
-                    var lvl = LevelingCore.mobLevelRegistry.getOrCreateWithPersistence(
-                        entityId,
-                        () -> MobLevelingUtil.computeSpawnLevel(npc),
-                        0,
-                        LevelingCore.mobLevelPersistence
-                    );
-                    if (lvl == null)
-                        continue;
-
-                    var text = formatNameplate(lvl.level);
-                    insertNameplate(commandBuffer, ref, text);
-                }
-            });
-        }
+                String text = formatNameplate(config.get().isShowPlayerLvls() ? lvl.level : 0);
+                insertNameplate(commandBuffer, ref, text);
+            }
+        });
     }
 
     private void insertNameplate(
@@ -100,7 +95,14 @@ public class ShowLvlHeadSystem implements Runnable {
         String desiredText
     ) {
         if (desiredText == null || desiredText.isBlank()) {
-            commandBuffer.removeComponent(ref, Nameplate.getComponentType());
+            var current = commandBuffer.getComponent(ref, Nameplate.getComponentType());
+            if (current != null) {
+                var base = Pattern.compile("\\s*\\[Lvl \\d+]\\s*$")
+                        .matcher(current.getText())
+                        .replaceAll("");
+                current.setText(base);
+                commandBuffer.putComponent(ref, Nameplate.getComponentType(), current);
+            }
             return;
         }
         var entityStatMap = commandBuffer.getComponent(ref, EntityStatMap.getComponentType());
@@ -125,6 +127,8 @@ public class ShowLvlHeadSystem implements Runnable {
     }
 
     private String formatNameplate(int level) {
+        if (level == 0)
+            return null;
         return " [Lvl " + level + "]";
     }
 }
