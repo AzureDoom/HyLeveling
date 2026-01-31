@@ -25,7 +25,6 @@ import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.compat.PartyPluginCompat;
 import com.azuredoom.levelingcore.compat.PartyProCompat;
-import com.azuredoom.levelingcore.compat.SimplePartyCompat;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.lang.CommandLang;
 import com.azuredoom.levelingcore.ui.hud.XPBarHud;
@@ -126,19 +125,7 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                 store.getExternalData().getWorld().execute(() -> {
                     LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService -> {
                         var levelBefore = levelService.getLevel(player.getUuid());
-                        // Checks that the SimpleParty plugin is installed
                         if (
-                            PluginManager.get()
-                                .getPlugin(new PluginIdentifier("net.justmadlime", "SimpleParty")) != null
-                        ) {
-                            SimplePartyCompat.onXPGain(
-                                finalXpAmount,
-                                player.getUuid(),
-                                levelService,
-                                config,
-                                playerRef
-                            );
-                        } else if (
                             PluginManager.get()
                                 .getPlugin(new PluginIdentifier("tsumori", "partypro")) != null
                         ) {

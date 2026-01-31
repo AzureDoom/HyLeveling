@@ -17,7 +17,7 @@
         "Buuz135:MultipleHUD": "*"
     },
     "OptionalDependencies": {
-        "net.justmadlime:SimpleParty": "*",
+        "com.carsonk:Party Plugin": "*",
         "tsumori:partypro": "*"
     },
     "DisabledByDefault": false,
