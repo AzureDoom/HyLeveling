@@ -122,6 +122,7 @@ public class GainXPEventSystem extends DeathSystems.OnDeathSystem {
                     xpAmount = Math.max(1L, Math.round(xpAmount * mult));
                 }
                 long finalXpAmount = xpAmount;
+                if (finalXpAmount <= 0) return;
                 store.getExternalData().getWorld().execute(() -> {
                     LevelingCoreApi.getLevelServiceIfPresent().ifPresent(levelService -> {
                         var levelBefore = levelService.getLevel(player.getUuid());
