@@ -55,9 +55,9 @@ public class LevelingCore extends JavaPlugin {
 
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
-    public static final Path configDataPath = Paths.get("./mods/levelingcore_LevelingCore/data/config/");
+    public static final Path configDataPath = Paths.get("./mods/com.azuredoom_levelingcore/data/config/");
 
-    public static final Path configPath = Paths.get("./mods/levelingcore_LevelingCore/data/config/");
+    public static final Path configPath = Paths.get("./mods/com.azuredoom_levelingcore/data/config/");
 
     public static final ConfigBootstrap.Bootstrap bootstrap = ConfigBootstrap.bootstrap(configPath);
 

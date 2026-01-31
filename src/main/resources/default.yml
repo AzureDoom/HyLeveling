@@ -6,7 +6,7 @@
 #
 # Supported JDBC URLs:
 #   H2 (file):
-#     jdbc:h2:file:./mods/levelingcore_LevelingCore/data/levelingcore;MODE=PostgreSQL
+#     jdbc:h2:file:./mods/com.azuredoom_levelingcore/data/levelingcore;MODE=PostgreSQL
 #
 #   MySQL:
 #     jdbc:mysql://host:port/dbname
@@ -25,7 +25,7 @@
 # - For MySQL/MariaDB/Postgres, set username/password.
 #
 database:
-  jdbcUrl: "jdbc:h2:file:./mods/levelingcore_LevelingCore/data/levelingcore;MODE=PostgreSQL"
+  jdbcUrl: "jdbc:h2:file:./mods/com.azuredoom_levelingcore/data/levelingcore;MODE=PostgreSQL"
   username: ""
   password: ""
   maxPoolSize: 10
