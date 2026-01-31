@@ -142,11 +142,6 @@ shadowJar {
 
     configurations = [project.configurations.shadowBundle]
 
-    relocate 'com.zaxxer.hikari', 'com.azuredoom.levelingcore.libs.hikari'
-    relocate 'org.yaml.snakeyaml', 'com.azuredoom.levelingcore.libs.snakeyaml'
-    relocate 'net.objecthunter.exp4j', 'com.azuredoom.levelingcore.libs.exp4j'
-    relocate 'org.h2', 'com.azuredoom.levelingcore.libs.h2'
-
     manifest {
         attributes(
                 'Main-Class': 'com.azuredoom.levelingcore.LevelingCore'
