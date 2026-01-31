@@ -98,8 +98,8 @@ public class ShowLvlHeadSystem implements Runnable {
             var current = commandBuffer.getComponent(ref, Nameplate.getComponentType());
             if (current != null) {
                 var base = Pattern.compile("\\s*\\[Lvl \\d+]\\s*$")
-                        .matcher(current.getText())
-                        .replaceAll("");
+                    .matcher(current.getText())
+                    .replaceAll("");
                 current.setText(base);
                 commandBuffer.putComponent(ref, Nameplate.getComponentType(), current);
             }
