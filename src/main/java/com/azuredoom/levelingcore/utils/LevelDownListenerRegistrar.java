@@ -1,6 +1,5 @@
 package com.azuredoom.levelingcore.utils;
 
-import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
@@ -20,6 +19,7 @@ import com.azuredoom.levelingcore.LevelingCore;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.lang.CommandLang;
+import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 
 @SuppressWarnings("removal")
 public class LevelDownListenerRegistrar {

@@ -85,7 +85,11 @@ public class ShowLvlHeadSystem implements Runnable {
                     continue;
 
                 final var entityId = npc.getUuid();
-                var entityName = I18nModule.get().getMessage(Boolean.parseBoolean(locale.get()) ? null : "en-US", npc.getRole().getNameTranslationKey());
+                var entityName = I18nModule.get()
+                    .getMessage(
+                        Boolean.parseBoolean(locale.get()) ? null : "en-US",
+                        npc.getRole().getNameTranslationKey()
+                    );
                 var lvl = LevelingCore.mobLevelRegistry.getOrCreateWithPersistence(
                     entityId,
                     () -> MobLevelingUtil.computeSpawnLevel(npc),
@@ -120,7 +124,8 @@ public class ShowLvlHeadSystem implements Runnable {
         var healthStat = DefaultEntityStatTypes.getHealth();
         var healthValue = entityStatMap.get(healthStat);
 
-        if (healthValue.get() <= 0) return;
+        if (healthValue.get() <= 0)
+            return;
 
         var current = commandBuffer.getComponent(ref, Nameplate.getComponentType());
         if (current != null) {
@@ -128,7 +133,8 @@ public class ShowLvlHeadSystem implements Runnable {
             var strip = buildSuffixStripPattern();
 
             if (strip.matcher(oldText).find()) {
-                if (oldText.equals(desiredText)) return;
+                if (oldText.equals(desiredText))
+                    return;
                 current.setText(desiredText);
             } else {
                 current.setText(oldText + desiredText);
@@ -172,10 +178,10 @@ public class ShowLvlHeadSystem implements Runnable {
         }
 
         var regex = Pattern.quote(rawTemplate)
-                .replace("{level}", "\\E\\d+\\Q")
-                .replace("{name}", "\\E.*?\\Q")
-                .replace(" \\\\n", "\\E\\s*\\Q")
-                .replace("\\\\n", "\\E\\s*\\Q");
+            .replace("{level}", "\\E\\d+\\Q")
+            .replace("{name}", "\\E.*?\\Q")
+            .replace(" \\\\n", "\\E\\s*\\Q")
+            .replace("\\\\n", "\\E\\s*\\Q");
 
         return Pattern.compile(regex + "$", Pattern.DOTALL);
     }
