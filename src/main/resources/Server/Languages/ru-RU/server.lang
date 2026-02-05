@@ -4,8 +4,8 @@ items.Potion_SkillPoint_Reset.desc = Сбрасывает распределён
 levelingcore.levelrequired = Вам нужен уровень {requiredlevel}, чтобы использовать {itemid}. Ваш уровень: {level}.
 levelingcore.missingmultiplehud = Ошибка LevelingCore: MultipleHUD не найден, HUD опыта не будет корректно работать с другими модами, добавляющими пользовательский интерфейс
 
-levelingcore.showlevel = {playername} - Уровень {level}
-levelingcore.xpneeded = Требуется опыта для следующего уровня: {currentXp} / {xpForNextLevel}
+levelingcore.showlevel = Уровень {level}
+levelingcore.xpneeded = Опыт: {currentXp} / {xpForNextLevel} ({percentage})
 levelingcore.str = STR: {points}
 levelingcore.str.desc = Увеличивает урон в ближнем бою
 levelingcore.agi = AGI: {points}

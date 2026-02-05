@@ -4,8 +4,8 @@ items.Potion_SkillPoint_Reset.desc = Restablece los puntos de habilidad asignado
 levelingcore.levelrequired = Necesitas el nivel {requiredlevel} para usar {itemid}. Tu nivel es {level}.
 levelingcore.missingmultiplehud = Error de LevelingCore: No se encontró MultipleHUD, el HUD de XP no funcionará correctamente con otros mods que añadan una interfaz personalizada
 
-levelingcore.showlevel = {playername} - Nivel {level}
-levelingcore.xpneeded = XP requerida para el siguiente nivel: {currentXp} / {xpForNextLevel}
+levelingcore.showlevel = Nivel {level}
+levelingcore.xpneeded = XP: {currentXp} / {xpForNextLevel} ({percentage})
 levelingcore.str = STR: {points}
 levelingcore.str.desc = Aumenta el daño cuerpo a cuerpo
 levelingcore.agi = AGI: {points}

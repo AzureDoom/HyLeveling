@@ -42,7 +42,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         @Nonnull UIEventBuilder uiEventBuilder,
         @Nonnull Store<EntityStore> store
     ) {
-        uiCommandBuilder.append("Page/LevelingCore/statspage.ui");
+        uiCommandBuilder.append("Pages/LevelingCore/statspage.ui");
         this.update(uiCommandBuilder);
         uiEventBuilder.addEventBinding(
             CustomUIEventBindingType.Activating,
@@ -87,6 +87,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         var currentXp = levelServiceImpl.getXp(playerRef.getUuid());
         var currentLevel = levelServiceImpl.getLevel(playerRef.getUuid());
         var xpForNextLevel = levelServiceImpl.getXpForLevel(currentLevel + 1);
+        var percentage = (float) currentXp / xpForNextLevel * 100;
 
         uiCommandBuilder.set(
             "#Level.TextSpans",
@@ -94,7 +95,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#XP.TextSpans",
-            CommandLang.XP_NEEDED.param("currentXp", currentXp).param("xpForNextLevel", xpForNextLevel)
+            CommandLang.XP_NEEDED.param("currentXp", currentXp).param("xpForNextLevel", xpForNextLevel).param("percentage", percentage)
         );
         uiCommandBuilder.set("#AddStr" + ".HitTestVisible", hasAbilityPoints);
         uiCommandBuilder.set("#AddAgi" + ".HitTestVisible", hasAbilityPoints);
