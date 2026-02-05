@@ -1,6 +1,9 @@
 items.Potion_SkillPoint_Reset.name = Trank zum Zurücksetzen der Fertigkeitspunkte
 items.Potion_SkillPoint_Reset.desc = Setzt die zugewiesenen Fertigkeitspunkte des Spielers zurück und erstattet sie als verfügbare Punkte
 
+items.Book_OpenSkils.name = Foliant der Fähigkeiten
+items.Book_OpenSkils.desc = Ein geheimnisvoller Foliant, der die Fertigkeitspunkte und Fähigkeiten des Spielers offenbart.
+
 levelingcore.levelrequired = Du benötigst Level {requiredlevel}, um {itemid} zu benutzen. Dein Level ist {level}.
 levelingcore.missingmultiplehud = LevelingCore-Fehler: MultipleHUD nicht gefunden, das XP-HUD funktioniert nicht korrekt mit anderen Mods, die eine benutzerdefinierte UI hinzufügen
 

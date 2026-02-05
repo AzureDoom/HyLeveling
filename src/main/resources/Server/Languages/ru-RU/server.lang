@@ -1,6 +1,9 @@
 items.Potion_SkillPoint_Reset.name = Зелье сброса очков навыков
 items.Potion_SkillPoint_Reset.desc = Сбрасывает распределённые очки навыков игрока и возвращает их в доступные очки
 
+items.Book_OpenSkils.name = Фолиант навыков
+items.Book_OpenSkils.desc = Таинственный фолиант, раскрывающий очки навыков и способности игрока.
+
 levelingcore.levelrequired = Вам нужен уровень {requiredlevel}, чтобы использовать {itemid}. Ваш уровень: {level}.
 levelingcore.missingmultiplehud = Ошибка LevelingCore: MultipleHUD не найден, HUD опыта не будет корректно работать с другими модами, добавляющими пользовательский интерфейс
 

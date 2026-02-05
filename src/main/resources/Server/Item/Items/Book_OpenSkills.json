@@ -1,0 +1,89 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Book_OpenSkils.name",
+    "Description": "server.items.Book_OpenSkils.desc"
+  },
+  "Icon": "Icons/ItemsGenerated/Weapon_Spellbook_Grimoire_Purple.png",
+  "Categories": ["Items.Recipes"],
+  "Recipe": {
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Life_Essence",
+        "Quantity": 5
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Fieldcraft",
+        "Type": "Crafting",
+        "Categories": [
+          "Tools"
+        ]
+      },
+      {
+        "Id": "Workbench",
+        "Type": "Crafting",
+        "Categories": [
+          "Workbench_Survival"
+        ]
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 1
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Spellbook",
+  "Quality": "Common",
+  "Model": "Items/Weapons/Spellbook/Grimoire.blockymodel",
+  "Texture": "Items/Weapons/Spellbook/Grimoire_Purple_Texture.png",
+  "IconProperties": {
+    "Scale": 0.745,
+    "Translation": [
+      -7.8,
+      -7.8
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Charging",
+          "FailsOnDamage": false,
+          "HorizontalSpeedMultiplier": 0.5,
+          "Next": {
+            "0.0": {
+              "Type": "OpenSkillsInteraction"
+            }
+          }
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "Charging",
+          "FailsOnDamage": false,
+          "HorizontalSpeedMultiplier": 0.5,
+          "Next": {
+            "0.0": {
+              "Type": "OpenSkillsInteraction"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "InteractionVars": {
+    "Spellbook_Cast_Hurl_Effect": "Spellbook_Cast_Effect"
+  },
+  "Tags": {
+    "Type": ["Consumable"],
+    "Family": ["LevelingCore"]
+  }
+},

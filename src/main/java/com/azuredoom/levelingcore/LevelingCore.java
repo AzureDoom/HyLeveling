@@ -25,6 +25,7 @@ import com.azuredoom.levelingcore.config.internal.ConfigBootstrap;
 import com.azuredoom.levelingcore.config.internal.ConfigManager;
 import com.azuredoom.levelingcore.config.internal.LevelingCoreConfig;
 import com.azuredoom.levelingcore.exceptions.LevelingCoreException;
+import com.azuredoom.levelingcore.interaction.OpenSkillsInteraction;
 import com.azuredoom.levelingcore.interaction.SkillPointResetInteraction;
 import com.azuredoom.levelingcore.level.LevelServiceImpl;
 import com.azuredoom.levelingcore.level.itemlevellock.ItemToLevelMapping;
@@ -122,6 +123,8 @@ public class LevelingCore extends JavaPlugin {
         this.registerAllSystems();
         this.getCodecRegistry(Interaction.CODEC)
             .register("SkillPointResetInteraction", SkillPointResetInteraction.class, SkillPointResetInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC)
+            .register("OpenSkillsInteraction", OpenSkillsInteraction.class, OpenSkillsInteraction.CODEC);
         // Adds the UI to the player and ensures AP stats are applied
         this.getEventRegistry()
             .registerGlobal(
