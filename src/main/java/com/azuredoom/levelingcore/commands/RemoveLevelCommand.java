@@ -53,15 +53,16 @@ public class RemoveLevelCommand extends AbstractPlayerCommand {
         @NonNullDecl PlayerRef playerRef,
         @NonNullDecl World world
     ) {
-        if (LevelingCoreApi.getLevelServiceIfPresent().isEmpty()) {
+        var levelService = LevelingCoreApi.getLevelServiceIfPresent().orElse(null);
+        if (levelService == null) {
             commandContext.sendMessage(CommandLang.NOT_INITIALIZED);
             return;
         }
         playerRef = this.playerArg.get(commandContext);
         var levelRef = this.levelArg.get(commandContext);
         var playerUUID = playerRef.getUuid();
-        LevelingCoreApi.getLevelServiceIfPresent().get().removeLevel(playerUUID, levelRef);
-        var level = LevelingCoreApi.getLevelServiceIfPresent().get().getLevel(playerUUID);
+        levelService.removeLevel(playerUUID, levelRef);
+        var level = levelService.getLevel(playerUUID);
         var removeLevelMsg = CommandLang.REMOVE_LEVEL_1.param("level", levelRef)
             .param("player", playerRef.getUsername());
         var levelTotalMsg = CommandLang.REMOVE_LEVEL_2.param("player", playerRef.getUsername()).param("level", level);

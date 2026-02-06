@@ -55,15 +55,16 @@ public class RemoveXpCommand extends AbstractPlayerCommand {
         @NonNullDecl PlayerRef playerRef,
         @NonNullDecl World world
     ) {
-        if (LevelingCoreApi.getLevelServiceIfPresent().isEmpty()) {
+        var levelService = LevelingCoreApi.getLevelServiceIfPresent().orElse(null);
+        if (levelService == null) {
             commandContext.sendMessage(CommandLang.NOT_INITIALIZED);
             return;
         }
         playerRef = this.playerArg.get(commandContext);
         var xpRef = this.xpArg.get(commandContext);
         var playerUUID = playerRef.getUuid();
-        LevelingCoreApi.getLevelServiceIfPresent().get().removeXp(playerUUID, xpRef);
-        var level = LevelingCoreApi.getLevelServiceIfPresent().get().getLevel(playerUUID);
+        levelService.removeXp(playerUUID, xpRef);
+        var level = levelService.getLevel(playerUUID);
         var removedXPMsg = CommandLang.REMOVE_XP_1.param("xp", xpRef).param("player", playerRef.getUsername());
         var levelTotalMsg = CommandLang.REMOVE_XP_2.param("player", playerRef.getUsername()).param("level", level);
         if (config.get().isEnableLevelAndXPTitles())

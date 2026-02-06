@@ -55,15 +55,16 @@ public class AddLevelCommand extends AbstractPlayerCommand {
         @NonNullDecl PlayerRef playerRef,
         @NonNullDecl World world
     ) {
-        if (LevelingCoreApi.getLevelServiceIfPresent().isEmpty()) {
+        var levelService = LevelingCoreApi.getLevelServiceIfPresent().orElse(null);
+        if (levelService == null) {
             commandContext.sendMessage(CommandLang.NOT_INITIALIZED);
             return;
         }
         playerRef = this.playerArg.get(commandContext);
         var levelRef = this.levelArg.get(commandContext);
         var playerUUID = playerRef.getUuid();
-        LevelingCoreApi.getLevelServiceIfPresent().get().addLevel(playerUUID, levelRef);
-        var level = LevelingCoreApi.getLevelServiceIfPresent().get().getLevel(playerUUID);
+        levelService.addLevel(playerUUID, levelRef);
+        var level = levelService.getLevel(playerUUID);
         var addLevelMsg = levelRef == 1 ? CommandLang.ADD_LEVEL_1 : CommandLang.ADD_LEVEL_2;
         var finalAddLevelMsg = addLevelMsg.param("level", levelRef).param("player", playerRef.getUsername());
         var playerLevelNowMsg = CommandLang.ADD_LEVEL_3.param("player", playerRef.getUsername()).param("level", level);

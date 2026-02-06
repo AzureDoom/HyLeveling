@@ -18,7 +18,6 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.util.concurrent.CompletableFuture;
 
-import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.compat.hyui.HyUICompat;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.lang.CommandLang;
@@ -43,10 +42,6 @@ public class ShowStatsCommand extends AbstractPlayerCommand {
         @NonNullDecl PlayerRef playerRef,
         @NonNullDecl World world
     ) {
-        if (LevelingCoreApi.getLevelServiceIfPresent().isEmpty()) {
-            commandContext.sendMessage(CommandLang.NOT_INITIALIZED);
-            return;
-        }
         var player = commandContext.senderAs(Player.class);
 
         CompletableFuture.runAsync(() -> {

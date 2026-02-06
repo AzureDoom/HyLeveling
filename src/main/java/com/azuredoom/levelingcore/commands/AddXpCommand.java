@@ -55,15 +55,16 @@ public class AddXpCommand extends AbstractPlayerCommand {
         @NonNullDecl PlayerRef playerRef,
         @NonNullDecl World world
     ) {
-        if (LevelingCoreApi.getLevelServiceIfPresent().isEmpty()) {
+        var levelService = LevelingCoreApi.getLevelServiceIfPresent().orElse(null);
+        if (levelService == null) {
             commandContext.sendMessage(CommandLang.NOT_INITIALIZED);
             return;
         }
         playerRef = this.playerArg.get(commandContext);
         var xpRef = this.xpArg.get(commandContext);
         var playerUUID = playerRef.getUuid();
-        LevelingCoreApi.getLevelServiceIfPresent().get().addXp(playerUUID, xpRef);
-        var level = LevelingCoreApi.getLevelServiceIfPresent().get().getLevel(playerUUID);
+        levelService.addXp(playerUUID, xpRef);
+        var level = levelService.getLevel(playerUUID);
         var setXPMsg = CommandLang.ADD_XP_1.param("xp", xpRef).param("player", playerRef.getUsername());
         var levelTotalMsg = CommandLang.ADD_XP_2.param("player", playerRef.getUsername()).param("level", level);
         if (config.get().isEnableLevelAndXPTitles())
