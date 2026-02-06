@@ -1,3 +1,18 @@
+v0.9.5 
+- Placeholder API support is finished and active now
+- Updated manifest to use >= 2026.02.06-aa1b071c2 instead of *
+- PlaceholderLib support is finished and active now
+- Added health/stamina/mana info to the status screen when using HyUI
+- Format large numbers more cleanly for million and billion values
+- Fixed /setlevel command bypassing max level check
+- Fixed /addlevel command bypassing max level check
+- Fixed /removelevel command bypassing min level check
+- Fixed /removexp command allowing xp removal below level one
+- Fixed /addxp command allowing xp addition above max level
+- Fixed xp in the status screen showing total xp instead of current xp needed for the next level.
+- Fixed xp in the hud showing total xp instead of the current xp needed for the next level.
+- Added a +5 button to the status screen to add 5 ability points to the player. (Only on the HyUI Status screen)
+
 v0.9.4 
 - Fixed a bug where the new HyUI stats menu would not properly apply stat increases for health, stamina, oxygen, and mana.
 - Added optional support for AutoMultiHud to not show the MultipleHud missing message.
