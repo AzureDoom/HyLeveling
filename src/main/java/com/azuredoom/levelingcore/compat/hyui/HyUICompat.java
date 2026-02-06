@@ -48,24 +48,24 @@ public class HyUICompat {
         var template = new TemplateProcessor()
             .setVariable(
                 "playerHealth",
-                String.format("%.0f", StatsUtils.formatXp(playerStatMap.get(healthIndex).get()))
+                StatsUtils.formatXp(playerStatMap.get(healthIndex).get())
             )
             .setVariable(
                 "playerHealthMax",
-                String.format("%.0f", StatsUtils.formatXp(playerStatMap.get(healthIndex).getMax()))
+                StatsUtils.formatXp(playerStatMap.get(healthIndex).getMax())
             )
             .setVariable(
                 "playerStamina",
-                String.format("%.0f", StatsUtils.formatXp(playerStatMap.get(staminaIndex).get()))
+                StatsUtils.formatXp(playerStatMap.get(staminaIndex).get())
             )
             .setVariable(
                 "playerStaminaMax",
-                String.format("%.0f", StatsUtils.formatXp(playerStatMap.get(staminaIndex).getMax()))
+                StatsUtils.formatXp(playerStatMap.get(staminaIndex).getMax())
             )
-            .setVariable("playerMana", String.format("%.0f", StatsUtils.formatXp(playerStatMap.get(manaIndex).get())))
+            .setVariable("playerMana", StatsUtils.formatXp(playerStatMap.get(manaIndex).get()))
             .setVariable(
                 "playerManaMax",
-                String.format("%.0f", StatsUtils.formatXp(playerStatMap.get(manaIndex).getMax()))
+                StatsUtils.formatXp(playerStatMap.get(manaIndex).getMax())
             )
             .setVariable("playerName", playerRef.getUsername())
             .setVariable("playerLevel", CommandLang.SHOW_LEVEL.param("level", currentLevel).getAnsiMessage())
