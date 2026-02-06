@@ -108,6 +108,17 @@ public class LevelingCore extends JavaPlugin {
         config = this.withConfig("levelingcore", GUIConfig.CODEC);
     }
 
+    @Override
+    protected void start() {
+        // if (PluginManager.get().getPlugin(new PluginIdentifier("HelpChat", "PlaceholderAPI")) != null) {
+        // new LevelingCoreExpansion().register();
+        // }
+
+        // if (PluginManager.get().getPlugin(new PluginIdentifier("PlaceholderLib", "PlaceholderLib")) != null) {
+        // PlaceholderLibCompat.register();
+        // }
+    }
+
     /**
      * Initializes the core components of the leveling system. This method sets up necessary configurations, registers
      * commands, and configures systems to handle player leveling and experience management. It also initializes the

@@ -38,6 +38,9 @@ repositories {
         url = uri("https://maven.hytale-mods.dev/releases")
     }
     maven {
+        url = 'https://repo.helpch.at/releases/'
+    }
+    maven {
         url "https://cursemaven.com"
     }
 }
@@ -51,6 +54,10 @@ dependencies {
     runtimeOnly 'curse.maven:partypro-1438292:7529599'
     compileOnly "curse.maven:hyui-1431415:7567866"
     runtimeOnly "curse.maven:hyui-1431415:7567866"
+    compileOnly "curse.maven:placeholderlib-1438208:7540696"
+    runtimeOnly "curse.maven:placeholderlib-1438208:7540696"
+    compileOnly 'at.helpch:placeholderapi-hytale:1.0.4'
+    runtimeOnly 'at.helpch:placeholderapi-hytale:1.0.4'
     //compileOnly fileTree(dir: "$rootDir/libs", include: ["*.jar"])
     //runtimeOnly fileTree(dir: "$rootDir/libs", include: ["*.jar"])
     // Needed libs
