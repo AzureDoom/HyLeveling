@@ -35,8 +35,10 @@ public class HudPlayerReady {
             if (PluginManager.get().getPlugin(new PluginIdentifier("Buuz135", "MultipleHUD")) != null) {
                 MultipleHudCompat.showHud(player, playerRef, xpHud);
             } else {
-                player.sendMessage(CommandLang.MISSING_MULTIPLE_HUD);
-                LevelingCore.LOGGER.at(Level.WARNING).log(CommandLang.MISSING_MULTIPLE_HUD.getRawText());
+                if (PluginManager.get().getPlugin(new PluginIdentifier("AutoMultiHud", "AutoMultiHud")) == null) {
+                    player.sendMessage(CommandLang.MISSING_MULTIPLE_HUD);
+                    LevelingCore.LOGGER.at(Level.WARNING).log(CommandLang.MISSING_MULTIPLE_HUD.getRawText());
+                }
                 player.getHudManager().setCustomHud(playerRef, xpHud);
             }
             XPBarHud.updateHud(playerRef);
