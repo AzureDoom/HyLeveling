@@ -120,7 +120,7 @@ tasks.register('updatePluginManifest') {
         manifestJson.Description = project.mod_description
         manifestJson.Authors = parseAuthors(propStr('mod_credits', null))
         manifestJson.Website = project.mod_url
-        manifestJson.ServerVersion = "*"
+        manifestJson.ServerVersion = project.server_version
         manifestJson.Dependencies = parseDepMap(propStr('manifest_dependencies', null))
         manifestJson.OptionalDependencies = parseDepMap(propStr('manifest_opt_dependencies', null))
         manifestJson.DisabledByDefault = project.disabled_by_default.toBoolean()
