@@ -32,8 +32,8 @@ public class HyUICompat {
         var uuid = playerRef.getUuid();
         var currentLevel = levelService.getLevel(uuid);
         var config = LevelingCore.getConfig();
-        var currentXp = levelService.getXp(uuid);
-        var xpForNextLevel = levelService.getXpForLevel(levelService.getLevel(uuid) + 1);
+        var currentXp = levelService.getXp(uuid) - levelService.getXpForLevel(currentLevel);
+        var xpForNextLevel = levelService.getXpForLevel(levelService.getLevel(uuid) + 1) - levelService.getXpForLevel(currentLevel);
         var percentage = (float) currentXp / xpForNextLevel * 100;
         var playerStatMap = store.ensureAndGetComponent(playerRef.getReference(), EntityStatMap.getComponentType());
         var healthIndex = DefaultEntityStatTypes.getHealth();

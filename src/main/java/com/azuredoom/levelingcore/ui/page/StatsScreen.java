@@ -78,16 +78,16 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
     }
 
     public void update(UICommandBuilder uiCommandBuilder) {
-        var levelServiceOpt = LevelingCoreApi.getLevelServiceIfPresent();
-        if (levelServiceOpt.isEmpty()) {
+        var levelService = LevelingCoreApi.getLevelServiceIfPresent().orElse(null);
+        if (levelService == null) {
             uiCommandBuilder.set("#PNTSLabel.TextSpans", Message.raw("Service unavailable"));
             return;
         }
-        var levelServiceImpl = levelServiceOpt.get();
-        var hasAbilityPoints = levelServiceImpl.getAvailableAbilityPoints(playerRef.getUuid()) > 0;
-        var currentXp = levelServiceImpl.getXp(playerRef.getUuid());
-        var currentLevel = levelServiceImpl.getLevel(playerRef.getUuid());
-        var xpForNextLevel = levelServiceImpl.getXpForLevel(currentLevel + 1);
+        var playerUUID = playerRef.getUuid();
+        var hasAbilityPoints = levelService.getAvailableAbilityPoints(playerUUID) > 0;
+        var currentLevel = levelService.getLevel(playerUUID);
+        var currentXp = levelService.getXp(playerUUID) - levelService.getXpForLevel(currentLevel);
+        var xpForNextLevel = levelService.getXpForLevel(levelService.getLevel(playerUUID) + 1) - levelService.getXpForLevel(currentLevel);
         var percentage = (float) currentXp / xpForNextLevel * 100;
 
         uiCommandBuilder.set(
@@ -108,7 +108,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         uiCommandBuilder.set("#AddCon" + ".HitTestVisible", hasAbilityPoints);
         uiCommandBuilder.set(
             "#STR.TextSpans",
-            CommandLang.STR.param("points", StatsUtils.formatXp(levelServiceImpl.getStr(playerRef.getUuid())))
+            CommandLang.STR.param("points", StatsUtils.formatXp(levelService.getStr(playerUUID)))
         );
         uiCommandBuilder.set(
             "#STRDescription.TextSpans",
@@ -116,7 +116,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#AGI.TextSpans",
-            CommandLang.AGI.param("points", StatsUtils.formatXp(levelServiceImpl.getAgi(playerRef.getUuid())))
+            CommandLang.AGI.param("points", StatsUtils.formatXp(levelService.getAgi(playerUUID)))
         );
         uiCommandBuilder.set(
             "#AGIDescription.TextSpans",
@@ -124,7 +124,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#PER.TextSpans",
-            CommandLang.PER.param("points", StatsUtils.formatXp(levelServiceImpl.getPer(playerRef.getUuid())))
+            CommandLang.PER.param("points", StatsUtils.formatXp(levelService.getPer(playerUUID)))
         );
         uiCommandBuilder.set(
             "#PERDescription.TextSpans",
@@ -132,7 +132,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#VIT.TextSpans",
-            CommandLang.VIT.param("points", StatsUtils.formatXp(levelServiceImpl.getVit(playerRef.getUuid())))
+            CommandLang.VIT.param("points", StatsUtils.formatXp(levelService.getVit(playerUUID)))
         );
         uiCommandBuilder.set(
             "#VITDescription.TextSpans",
@@ -140,7 +140,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#INT.TextSpans",
-            CommandLang.INT.param("points", StatsUtils.formatXp(levelServiceImpl.getInt(playerRef.getUuid())))
+            CommandLang.INT.param("points", StatsUtils.formatXp(levelService.getInt(playerUUID)))
         );
         uiCommandBuilder.set(
             "#INTDescription.TextSpans",
@@ -148,7 +148,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
         );
         uiCommandBuilder.set(
             "#CON.TextSpans",
-            CommandLang.CON.param("points", StatsUtils.formatXp(levelServiceImpl.getCon(playerRef.getUuid())))
+            CommandLang.CON.param("points", StatsUtils.formatXp(levelService.getCon(playerUUID)))
         );
         uiCommandBuilder.set(
             "#CONDescription.TextSpans",
@@ -158,7 +158,7 @@ public class StatsScreen extends InteractiveCustomUIPage<StatsScreen.BindingData
             "#PNTSLabel.TextSpans",
             CommandLang.ABILITY_POINTS_AVAILABLE.param(
                 "ability_points",
-                StatsUtils.formatXp(levelServiceImpl.getAvailableAbilityPoints(playerRef.getUuid()))
+                StatsUtils.formatXp(levelService.getAvailableAbilityPoints(playerUUID))
             )
         );
     }
