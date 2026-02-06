@@ -79,7 +79,6 @@ public class LevelDownListenerRegistrar {
                             levelService1.setInt(playerId, 0);
                             playerRef.sendMessage(
                                 CommandLang.ABILITY_POINTS.param("ability_points", totalFromLeveling)
-                                    .param("player_name", playerRef.getUsername())
                             );
                         }
 

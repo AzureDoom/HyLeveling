@@ -94,7 +94,6 @@ public final class LevelUpListenerRegistrar {
                                 "ability_points",
                                 levelService.getAvailableAbilityPoints(playerId)
                             )
-                                .param("player_name", playerRef.getUsername())
                         );
                     }
                     LevelDownListenerRegistrar.clear(playerId);
