@@ -46,20 +46,17 @@ repositories {
 }
 
 dependencies {
-    vineflowerTool("org.vineflower:vineflower:1.11.2")
-    compileOnly("com.buuz135:MultipleHUD:1.0.4")
-    runtimeOnly("com.buuz135:MultipleHUD:1.0.4")
+    vineflowerTool 'org.vineflower:vineflower:1.11.2'
+    compileOnly 'com.buuz135:MultipleHUD:1.0.4'
+    runtimeOnly 'com.buuz135:MultipleHUD:1.0.4'
     compileOnly 'curse.maven:partyinfo-1429469:7526614'
     compileOnly 'curse.maven:partypro-1438292:7529599'
     runtimeOnly 'curse.maven:partypro-1438292:7529599'
     compileOnly "curse.maven:hyui-1431415:7581227"
     runtimeOnly "curse.maven:hyui-1431415:7581227"
     compileOnly "curse.maven:automultihud-1451807:7579370"
-    runtimeOnly "curse.maven:automultihud-1451807:7579370"
     compileOnly "curse.maven:placeholderlib-1438208:7540696"
-    runtimeOnly "curse.maven:placeholderlib-1438208:7540696"
     compileOnly 'at.helpch:placeholderapi-hytale:1.0.4'
-    runtimeOnly 'at.helpch:placeholderapi-hytale:1.0.4'
     //compileOnly fileTree(dir: "$rootDir/libs", include: ["*.jar"])
     //runtimeOnly fileTree(dir: "$rootDir/libs", include: ["*.jar"])
     // Needed libs
@@ -76,8 +73,8 @@ dependencies {
     shadowBundle 'org.postgresql:postgresql:42.7.8'
     // Testing
     testImplementation platform("org.junit:junit-bom:6.0.1")
-    testImplementation "org.junit.jupiter:junit-jupiter"
-    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 def serverRunDir = file("$projectDir/run")
@@ -322,7 +319,8 @@ if (keyPropsFile.exists()) {
                     "better-modlist",
                     "update-checker",
                     "automultihud",
-                    "placeholder-api"
+                    "placeholder-api",
+                    "placeholderlib"
             ]
 
             def dependencies = []

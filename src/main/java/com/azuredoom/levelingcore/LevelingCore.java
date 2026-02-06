@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import com.azuredoom.levelingcore.api.LevelingCoreApi;
 import com.azuredoom.levelingcore.commands.*;
 import com.azuredoom.levelingcore.compat.placeholderapi.PlaceholderAPICompat;
+import com.azuredoom.levelingcore.compat.placeholderlib.PlaceholderLibCompat;
 import com.azuredoom.levelingcore.config.GUIConfig;
 import com.azuredoom.levelingcore.config.internal.ConfigBootstrap;
 import com.azuredoom.levelingcore.config.internal.ConfigManager;
@@ -117,9 +118,9 @@ public class LevelingCore extends JavaPlugin {
             PlaceholderAPICompat.register();
         }
 
-        // if (PluginManager.get().getPlugin(new PluginIdentifier("PlaceholderLib", "PlaceholderLib")) != null) {
-        // PlaceholderLibCompat.register();
-        // }
+        if (PluginManager.get().getPlugin(new PluginIdentifier("PlaceholderLib", "PlaceholderLib")) != null) {
+            PlaceholderLibCompat.register();
+        }
     }
 
     /**

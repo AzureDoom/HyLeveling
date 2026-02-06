@@ -21,7 +21,8 @@
         "tsumori:partypro": "*",
         "Ellie:HyUI": "*",
         "AutoMultiHud:AutoMultiHud": "*",
-        "HelpChat:PlaceholderAPI": ">= 1.0.4"
+        "HelpChat:PlaceholderAPI": ">= 1.0.4",
+        "PlaceholderLib:PlaceholderLib": "*"
     },
     "DisabledByDefault": false,
     "Main": "com.azuredoom.levelingcore.LevelingCore",
