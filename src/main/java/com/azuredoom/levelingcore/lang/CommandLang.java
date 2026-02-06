@@ -86,4 +86,8 @@ public class CommandLang {
 
     public static final Message CON_DESC = Message.translation("server.levelingcore.con.desc");
 
+    public static final Message ADD_LEVEL_MAX_LEVEL_REACHED = Message.translation(
+        "commands.levelingcore.addlevel.maxlevelreached"
+    );
+
 }
