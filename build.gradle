@@ -54,6 +54,8 @@ dependencies {
     runtimeOnly 'curse.maven:partypro-1438292:7529599'
     compileOnly "curse.maven:hyui-1431415:7567866"
     runtimeOnly "curse.maven:hyui-1431415:7567866"
+    compileOnly "curse.maven:automultihud-1451807:7579370"
+    runtimeOnly "curse.maven:automultihud-1451807:7579370"
     compileOnly "curse.maven:placeholderlib-1438208:7540696"
     runtimeOnly "curse.maven:placeholderlib-1438208:7540696"
     compileOnly 'at.helpch:placeholderapi-hytale:1.0.4'
@@ -318,7 +320,8 @@ if (keyPropsFile.exists()) {
                     "partypro",
                     "party-info",
                     "better-modlist",
-                    "update-checker"
+                    "update-checker",
+                    "automultihud"
             ]
 
             def dependencies = []
