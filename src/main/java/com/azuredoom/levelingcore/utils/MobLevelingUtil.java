@@ -71,19 +71,17 @@ public class MobLevelingUtil {
         if (npc.getReference() == null || !npc.getReference().isValid())
             return false;
 
-        store.getExternalData().getWorld().execute(() -> {
-            var healthMult = 1F + ((float) level - 1F) * config.get().getMobHealthMultiplier();
-            var stats = store.getComponent(npc.getReference(), EntityStatMap.getComponentType());
-            var healthIndex = DefaultEntityStatTypes.getHealth();
-            var modifier = new StaticModifier(
-                Modifier.ModifierTarget.MAX,
-                StaticModifier.CalculationType.ADDITIVE,
-                healthMult
-            );
-            stats.putModifier(healthIndex, "LevelingCore_mob_health", modifier);
-            stats.maximizeStatValue(EntityStatMap.Predictable.SELF, DefaultEntityStatTypes.getHealth());
-            stats.update();
-        });
+        var healthMult = 1F + ((float) level - 1F) * config.get().getMobHealthMultiplier();
+        var stats = store.getComponent(npc.getReference(), EntityStatMap.getComponentType());
+        var healthIndex = DefaultEntityStatTypes.getHealth();
+        var modifier = new StaticModifier(
+            Modifier.ModifierTarget.MAX,
+            StaticModifier.CalculationType.ADDITIVE,
+            healthMult
+        );
+        stats.putModifier(healthIndex, "LevelingCore_mob_health", modifier);
+        stats.maximizeStatValue(EntityStatMap.Predictable.SELF, DefaultEntityStatTypes.getHealth());
+        stats.update();
 
         return true;
     }
