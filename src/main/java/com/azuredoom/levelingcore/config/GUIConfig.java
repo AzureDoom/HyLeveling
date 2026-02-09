@@ -248,9 +248,21 @@ public class GUIConfig {
         )
         .add()
         .append(
+            new KeyedCodec<Float>("MobBaseDamage", Codec.FLOAT),
+            (exConfig, aFloat, extraInfo) -> exConfig.mobBaseDamage = aFloat,
+            (exConfig, extraInfo) -> exConfig.mobBaseDamage
+        )
+        .add()
+        .append(
             new KeyedCodec<Float>("MobRangeDamageMultiplier", Codec.FLOAT),
             (exConfig, aFloat, extraInfo) -> exConfig.mobRangeDamageMultiplier = aFloat,
             (exConfig, extraInfo) -> exConfig.mobRangeDamageMultiplier
+        )
+        .add()
+        .append(
+            new KeyedCodec<Float>("MobBaseRangeDamage", Codec.FLOAT),
+            (exConfig, aFloat, extraInfo) -> exConfig.mobBaseRangeDamage = aFloat,
+            (exConfig, extraInfo) -> exConfig.mobBaseRangeDamage
         )
         .add()
         .append(
@@ -369,7 +381,11 @@ public class GUIConfig {
 
     private float mobDamageMultiplier = 0.25F;
 
+    private float mobBaseDamage = 0.0F;
+
     private float mobRangeDamageMultiplier = 0.3F;
+
+    private float mobBaseRangeDamage = 0.0F;
 
     private boolean enableItemLevelRestriction = false;
 
@@ -616,8 +632,16 @@ public class GUIConfig {
         return mobDamageMultiplier;
     }
 
+    public float getMobBaseDamage() {
+        return mobBaseDamage;
+    }
+
     public float getMobRangeDamageMultiplier() {
         return mobRangeDamageMultiplier;
+    }
+
+    public float getMobBaseRangeDamage() {
+        return mobBaseRangeDamage;
     }
 
     public boolean isEnableItemLevelRestriction() {

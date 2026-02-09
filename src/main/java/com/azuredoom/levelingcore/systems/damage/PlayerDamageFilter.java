@@ -81,16 +81,18 @@ public class PlayerDamageFilter extends DamageEventSystem {
             () -> MobLevelingUtil.computeSpawnLevel(npcAttacker)
         );
         var mobLevel = mobLevelData.level;
+        var baseMelee = config.get().getMobBaseDamage();
         var meleeMulti = config.get().getMobDamageMultiplier();
+        var baseProjectile = config.get().getMobBaseRangeDamage();
         var projectileMulti = config.get().getMobRangeDamageMultiplier();
 
         var con = levelService.getCon(victimPlayerRef.getUuid());
         var mult = conDamageMultiplier(con);
 
         if (isProjectile) {
-            damage.setAmount(incoming * mult * projectileMulti * mobLevel);
+            damage.setAmount(incoming * mult * (baseMelee + projectileMulti * mobLevel));
         } else {
-            damage.setAmount(incoming * mult * meleeMulti * mobLevel);
+            damage.setAmount(incoming * mult * (baseProjectile + meleeMulti * mobLevel));
         }
     }
 
