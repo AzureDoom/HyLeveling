@@ -64,7 +64,7 @@ public class MobLevelingUtil {
         int level,
         Store<EntityStore> store
     ) {
-        if (npc.getReference() == null)
+        if (npc.getReference() == null || !npc.getReference().isValid())
             return false;
 
         store.getExternalData().getWorld().execute(() -> {
