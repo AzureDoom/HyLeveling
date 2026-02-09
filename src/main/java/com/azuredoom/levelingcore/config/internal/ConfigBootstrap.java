@@ -10,6 +10,7 @@ import com.azuredoom.levelingcore.database.JdbcLevelRepository;
 import com.azuredoom.levelingcore.exceptions.LevelingCoreException;
 import com.azuredoom.levelingcore.level.LevelServiceImpl;
 import com.azuredoom.levelingcore.level.rewards.RewardEntry;
+import com.azuredoom.levelingcore.level.stats.StatsPerLevelMapping;
 
 /**
  * ConfigBootstrap is a utility class that initializes and configures the core components of the LevelingCore system.
@@ -29,10 +30,10 @@ public final class ConfigBootstrap {
      */
     public record Bootstrap(
         LevelServiceImpl service,
+        StatsPerLevelMapping statsPerLevel,
         Map<String, Integer> xpMapping,
         Map<Integer, List<RewardEntry>> levelRewardMapping,
         Map<String, Integer> itemLevelMapping,
-        Map<Integer, Integer> statsPerLevelMapping,
         Map<String, Integer> mobInstanceMapping,
         Map<String, Integer> mobZoneMapping,
         Map<String, Integer> mobBiomeMapping,
@@ -66,20 +67,20 @@ public final class ConfigBootstrap {
             repo.migrateFormulaIfNeeded(formula, formulaDescriptor);
         }
         var service = new LevelServiceImpl(formula, repo);
+        var statsPerLevel = LevelingCore.statsPerLevel;
         var xpMapping = LevelingCore.xpMapping;
         var levelRewardMapping = LevelingCore.levelRewardMapping;
         var itemLevelMapping = LevelingCore.itemLevelMapping;
-        var statsPerLevelMapping = LevelingCore.apMap;
         var mobInstanceMapping = LevelingCore.mobInstanceMapping;
         var mobZoneMapping = LevelingCore.mobZoneMapping;
         var mobBiomeMapping = LevelingCore.mobBiomeMapping;
 
         return new Bootstrap(
             service,
+            statsPerLevel,
             xpMapping,
             levelRewardMapping,
             itemLevelMapping,
-            statsPerLevelMapping,
             mobInstanceMapping,
             mobZoneMapping,
             mobBiomeMapping,

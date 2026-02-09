@@ -63,8 +63,10 @@ public class LevelDownListenerRegistrar {
                         if (!config.get().isDisableStatPointGainOnLevelUp()) {
                             int pointsPerLevel;
                             if (config.get().isUseStatsPerLevelMapping()) {
-                                var mapping = LevelingCore.apMap;
-                                pointsPerLevel = mapping.getOrDefault(newLevel, 5);
+                                pointsPerLevel = LevelingCore.statsPerLevel.getAddedStatsForLevel(
+                                    newLevel,
+                                    config.get().getStatsPerLevel()
+                                );
                             } else {
                                 pointsPerLevel = config.get().getStatsPerLevel();
                             }

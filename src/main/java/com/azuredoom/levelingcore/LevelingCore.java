@@ -84,7 +84,7 @@ public class LevelingCore extends JavaPlugin {
         LevelingCore.configPath
     );
 
-    public static final Map<Integer, Integer> apMap = StatsPerLevelMapping.loadOrCreate(LevelingCore.configPath);
+    public static final StatsPerLevelMapping statsPerLevel = new StatsPerLevelMapping(LevelingCore.configPath);
 
     public static final Map<String, Integer> mobInstanceMapping = MobInstanceMapping.loadOrCreate(
         LevelingCore.configPath
@@ -152,9 +152,10 @@ public class LevelingCore extends JavaPlugin {
                             var level = levelService.getLevel(uuid);
                             int targetTotal;
                             if (config.get().isUseStatsPerLevelMapping()) {
-                                var mapping = LevelingCore.apMap;
-                                // Mapping has the total ability points for the level
-                                targetTotal = mapping.getOrDefault(level, level * config.get().getStatsPerLevel());
+                                targetTotal = statsPerLevel.getCumulativeStatsForLevel(
+                                    level,
+                                    level * config.get().getStatsPerLevel()
+                                );
                             } else {
                                 targetTotal = level * config.get().getStatsPerLevel();
                             }

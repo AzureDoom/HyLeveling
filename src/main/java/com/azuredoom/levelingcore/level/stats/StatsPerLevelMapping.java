@@ -5,8 +5,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 
 import com.azuredoom.levelingcore.LevelingCore;
@@ -19,9 +20,15 @@ public class StatsPerLevelMapping {
 
     public static final String RESOURCE_DEFAULT = "/defaultstatsperlevelmapping.csv";
 
-    private StatsPerLevelMapping() {}
+    private Map<Integer, Integer> addedStatsPerLevel = new TreeMap<>();
 
-    public static Map<Integer, Integer> loadOrCreate(Path dataDir) {
+    private Map<Integer, Integer> cumulativeStatsPerLevel = new HashMap<>();
+
+    public StatsPerLevelMapping(Path dataDir) {
+        loadOrCreate(dataDir);
+    }
+
+    public void loadOrCreate(Path dataDir) {
         try {
             Files.createDirectories(dataDir);
             var configPath = dataDir.resolve(FILE_NAME);
@@ -40,21 +47,42 @@ public class StatsPerLevelMapping {
                 }
             }
 
-            var mapping = readXpCsv(configPath);
+            addedStatsPerLevel = readXpCsv(configPath);
+            cumulativeStatsPerLevel = new HashMap<>();
+            int total = 0;
+            for (var entry : addedStatsPerLevel.entrySet()) {
+                cumulativeStatsPerLevel.put(entry.getKey(), total += entry.getValue());
+            }
 
             LevelingCore.LOGGER.at(Level.INFO)
-                .log("Loaded Stats Per Level Mapping mapping from " + configPath + " " + mapping.size() + " entries)");
-            return mapping;
-
+                .log(
+                    "Loaded Stats Per Level Mapping mapping from " + configPath + " " + addedStatsPerLevel.size()
+                        + " entries)"
+                );
         } catch (Exception e) {
             throw new LevelingCoreException("Failed to load Stats Per Level Mapping config", e);
         }
     }
 
-    private static Map<Integer, Integer> readXpCsv(Path csvPath) throws Exception {
-        Map<Integer, Integer> out = new LinkedHashMap<>();
+    public int getAddedStatsForLevel(int level, int defaultValue) {
+        return addedStatsPerLevel.getOrDefault(level, defaultValue);
+    }
 
-        var total = 0;
+    public int getCumulativeStatsForLevel(int level, int fallbackValue) {
+        if (!cumulativeStatsPerLevel.containsKey(level)) {
+            int maxDefinedLevel = cumulativeStatsPerLevel.keySet().stream().max(Integer::compareTo).orElse(0);
+            if (level > maxDefinedLevel) {
+                return cumulativeStatsPerLevel.get(maxDefinedLevel);
+            } else {
+                return fallbackValue;
+            }
+        }
+        return cumulativeStatsPerLevel.get(level);
+    }
+
+    private static TreeMap<Integer, Integer> readXpCsv(Path csvPath) throws Exception {
+        TreeMap<Integer, Integer> out = new TreeMap<>();
+
         try (var reader = Files.newBufferedReader(csvPath, StandardCharsets.UTF_8)) {
             String line;
             var firstNonEmptyLine = true;
@@ -102,9 +130,7 @@ public class StatsPerLevelMapping {
                     continue;
                 }
 
-                // Cumulative total of the points
-                total += stats;
-                out.put(lvl, total);
+                out.put(lvl, stats);
             }
         }
 
