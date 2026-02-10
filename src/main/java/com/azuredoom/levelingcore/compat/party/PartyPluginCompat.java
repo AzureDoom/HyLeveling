@@ -11,7 +11,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.azuredoom.levelingcore.config.GUIConfig;
-import com.azuredoom.levelingcore.lang.CommandLang;
 import com.azuredoom.levelingcore.level.LevelServiceImpl;
 import com.azuredoom.levelingcore.ui.hud.XPBarHud;
 import com.azuredoom.levelingcore.utils.NotificationsUtil;
@@ -32,7 +31,7 @@ public class PartyPluginCompat {
         var party = PartyManager.getInstance().getPartyDataById(playerUuid);
         if (party == null || !cfg.isEnablePartyPluginXPShareCompat()) {
             if (!cfg.isDisableXPGainNotification()) {
-                NotificationsUtil.sendNotification(playerRef, CommandLang.GAINED.param("xp", xp));
+                NotificationsUtil.sendXPGainNotification(playerRef, xp);
             }
             levelService.addXp(playerUuid, xp);
             XPBarHud.updateHud(playerRef);
@@ -103,9 +102,15 @@ public class PartyPluginCompat {
 
             if (!cfg.isDisableXPGainNotification()) {
                 if (player != null) {
-                    NotificationsUtil.sendNotification(player, CommandLang.GAINED.param("xp", award));
+                    NotificationsUtil.sendXPGainNotification(
+                        player,
+                        award
+                    );
                 } else if (uuid.equals(playerUuid)) {
-                    NotificationsUtil.sendNotification(playerRef, CommandLang.GAINED.param("xp", award));
+                    NotificationsUtil.sendXPGainNotification(
+                        playerRef,
+                        award
+                    );
                 }
             }
 

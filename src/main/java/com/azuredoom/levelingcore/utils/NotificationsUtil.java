@@ -5,11 +5,15 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.util.NotificationUtil;
 
+import com.azuredoom.levelingcore.lang.CommandLang;
+
 /**
  * Utility class for sending notifications to players. Provides a method to send success notifications with a given
  * message to a specified player reference.
  */
 public class NotificationsUtil {
+
+    private NotificationsUtil() {}
 
     /**
      * Sends a success notification to a specific player.
@@ -22,6 +26,13 @@ public class NotificationsUtil {
             playerRef.getPacketHandler(),
             message,
             NotificationStyle.Success
+        );
+    }
+
+    public static void sendXPGainNotification(PlayerRef playerRef, long xpAmount) {
+        sendNotification(
+            playerRef,
+            CommandLang.GAINED.param("xp", xpAmount)
         );
     }
 }
