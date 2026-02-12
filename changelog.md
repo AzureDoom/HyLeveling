@@ -1,3 +1,11 @@
+v0.9.6 
+- Fixed stat points CSV mapping not working properly. – Huge thanks to KabanFriends for this fix!
+- Fixed a bug where mob scaling would happen if the entity ref is invalid. — Huge thanks to KabanFriends for this fix!
+- Added two new config options for mob base damage for melee/range. — Huge thanks to KabanFriends for this fix!
+- Adds item translated names to the level required message.
+- Adds mob environment mapping for mob leveling. — Huge thanks to GlobalHive for this feature!
+- Fixed player names not showing in nameplates when enabled with level.
+
 v0.9.5 
 - Placeholder API support is finished and active now
 - Updated manifest to use >= 2026.02.06-aa1b071c2 instead of *
