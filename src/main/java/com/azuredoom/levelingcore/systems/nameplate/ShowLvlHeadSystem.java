@@ -71,7 +71,7 @@ public class ShowLvlHeadSystem implements Runnable {
                 insertNameplate(
                     commandBuffer,
                     ref,
-                    formatNameplate(null, config.get().isShowPlayerLvls() ? lvl : 0)
+                    formatNameplate(playerRef.getUsername(), config.get().isShowPlayerLvls() ? lvl : 0)
                 );
             }
         });
