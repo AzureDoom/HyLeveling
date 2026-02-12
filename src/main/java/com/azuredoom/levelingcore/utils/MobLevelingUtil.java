@@ -51,7 +51,7 @@ public class MobLevelingUtil {
                 case ZONE ->
                     computeZoneLevel(store);
                 case ENVIRONMENT ->
-                    computeEnvironmentLevel(transform, store);
+                    computeEnvironmentLevel(transform, store, npc);
                 case INSTANCE ->
                     computeInstanceLevel(store);
             })
@@ -134,7 +134,7 @@ public class MobLevelingUtil {
         return biomeMapping.getOrDefault(currentBiome.toLowerCase(), 1);
     }
 
-    public static int computeEnvironmentLevel(TransformComponent transform, Store<EntityStore> store) {
+    public static int computeEnvironmentLevel(TransformComponent transform, Store<EntityStore> store, NPCEntity npc) {
         var world = store.getExternalData().getWorld();
         var mobPos = transform.getPosition();
         var chunk = world.getChunk(ChunkUtil.indexChunkFromBlock((int) mobPos.x, (int) mobPos.z));
@@ -160,8 +160,12 @@ public class MobLevelingUtil {
         }
 
         var environmentMapping = LevelingCore.mobEnvironmentMapping;
+        var seed = npc.getUuid().getMostSignificantBits() ^ npc.getUuid().getLeastSignificantBits();
+        var rng = new Random(seed);
+        final var baseLevel = environmentMapping.getOrDefault(envName.toLowerCase(), 1);
+        final var range = baseLevel + 10;
 
-        return environmentMapping.getOrDefault(envName.toLowerCase(), 1);
+        return baseLevel + rng.nextInt((range - baseLevel) + 1);
     }
 
     public static int computeNearbyPlayersMeanLevel(TransformComponent transform, Store<EntityStore> store) {
