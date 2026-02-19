@@ -17,7 +17,6 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.util.Locale;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.azuredoom.levelingcore.LevelingCore;
@@ -37,11 +36,11 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
 
     private final ConcurrentLinkedQueue<PendingUpdate> pending = new ConcurrentLinkedQueue<>();
 
-    private final AtomicBoolean drainScheduled = new AtomicBoolean(false);
-
     private static final int MAX_UPDATES_PER_DRAIN = 1000;
 
     private final Config<GUIConfig> config;
+
+    private boolean drainScheduled = false;
 
     public MobLevelSystem(Config<GUIConfig> config) {
         this.config = config;
@@ -95,65 +94,64 @@ public class MobLevelSystem extends EntityTickingSystem<EntityStore> {
 
         data.lastRecalcMs = nowMs;
 
-        pending.add(new PendingUpdate(npc, transform, store, data));
+        pending.add(new PendingUpdate(npc, transform, data));
 
-        if (drainScheduled.compareAndSet(false, true)) {
-            store.getExternalData().getWorld().execute(() -> drainPending(store));
+        if (!drainScheduled) {
+            drainScheduled = true;
+            drainPending(store);
         }
     }
 
     private void drainPending(@NonNullDecl Store<EntityStore> store) {
-        store.getExternalData().getWorld().execute(() -> {
-            try {
-                var mobMaxLevel = computeMobMaxLevel();
+        try {
+            var mobMaxLevel = computeMobMaxLevel();
 
-                var processed = 0;
-                PendingUpdate u;
+            var processed = 0;
+            PendingUpdate u;
 
-                while (processed < MAX_UPDATES_PER_DRAIN && (u = pending.poll()) != null) {
-                    var npc = u.npc();
-                    var transform = u.transform();
-                    var store1 = u.store();
-                    var data = u.data();
+            while (processed < MAX_UPDATES_PER_DRAIN && (u = pending.poll()) != null) {
+                var npc = u.npc();
+                var transform = u.transform();
+                var data = u.data();
 
-                    if (data.locked)
-                        continue;
+                if (data.locked)
+                    continue;
 
-                    var newLevel = Math.max(
+                var newLevel = Math.max(
+                    1,
+                    Math.min(mobMaxLevel, MobLevelingUtil.computeDynamicLevel(config, npc, transform, store))
+                );
+
+                if (newLevel != data.level) {
+                    data.level = newLevel;
+                }
+
+                if (!data.locked) {
+                    data.level = Math.max(
                         1,
-                        Math.min(mobMaxLevel, MobLevelingUtil.computeDynamicLevel(config, npc, transform, store1))
+                        Math.min(
+                            mobMaxLevel,
+                            MobLevelingUtil.computeDynamicLevel(config, npc, transform, store)
+                        )
                     );
-
-                    if (newLevel != data.level) {
-                        data.level = newLevel;
-                    }
-
-                    if (!data.locked) {
-                        data.level = Math.max(
-                            1,
-                            Math.min(
-                                mobMaxLevel,
-                                MobLevelingUtil.computeDynamicLevel(config, npc, transform, store1)
-                            )
-                        );
-                    }
-
-                    if (data.level != data.lastAppliedLevel) {
-                        if (MobLevelingUtil.applyMobScaling(config, npc, data.level, store1)) {
-                            data.lastAppliedLevel = data.level;
-                        }
-                    }
-
-                    processed++;
                 }
-            } finally {
-                drainScheduled.set(false);
 
-                if (!pending.isEmpty() && drainScheduled.compareAndSet(false, true)) {
-                    store.getExternalData().getWorld().execute(() -> drainPending(store));
+                if (data.level != data.lastAppliedLevel) {
+                    if (MobLevelingUtil.applyMobScaling(config, npc, data.level, store)) {
+                        data.lastAppliedLevel = data.level;
+                    }
                 }
+
+                processed++;
             }
-        });
+        } finally {
+            if (!pending.isEmpty()) {
+                drainScheduled = true;
+                drainPending(store);
+            } else {
+                drainScheduled = false;
+            }
+        }
     }
 
     private int computeMobMaxLevel() {
