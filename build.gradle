@@ -47,16 +47,16 @@ repositories {
 
 dependencies {
     vineflowerTool 'org.vineflower:vineflower:1.11.2'
-    compileOnly 'com.buuz135:MultipleHUD:1.0.4'
-    runtimeOnly 'com.buuz135:MultipleHUD:1.0.4'
+    compileOnly 'com.buuz135:MultipleHUD:1.0.6'
+    runtimeOnly 'com.buuz135:MultipleHUD:1.0.6'
     compileOnly 'curse.maven:partyinfo-1429469:7526614'
-    compileOnly 'curse.maven:partypro-1438292:7529599'
-    runtimeOnly 'curse.maven:partypro-1438292:7529599'
-    compileOnly "curse.maven:hyui-1431415:7581227"
-    runtimeOnly "curse.maven:hyui-1431415:7581227"
-    compileOnly "curse.maven:automultihud-1451807:7579370"
+    compileOnly 'curse.maven:partypro-1438292:7639178'
+    runtimeOnly 'curse.maven:partypro-1438292:7639178'
+    compileOnly "curse.maven:hyui-1431415:7645550"
+    runtimeOnly "curse.maven:hyui-1431415:7645550"
+    compileOnly "curse.maven:automultihud-1451807:7650909"
     compileOnly "curse.maven:placeholderlib-1438208:7540696"
-    compileOnly 'at.helpch:placeholderapi-hytale:1.0.4'
+    compileOnly 'at.helpch:placeholderapi-hytale:1.0.7'
     //compileOnly fileTree(dir: "$rootDir/libs", include: ["*.jar"])
     //runtimeOnly fileTree(dir: "$rootDir/libs", include: ["*.jar"])
     // Needed libs
