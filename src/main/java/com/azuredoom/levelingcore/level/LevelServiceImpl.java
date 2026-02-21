@@ -84,6 +84,16 @@ public class LevelServiceImpl {
         return formula.getLevelForXp(get(id).getXp());
     }
 
+    /**
+     * Checks if a player has reached the maximum level based on their current experience points (XP).
+     *
+     * @param id The unique identifier (UUID) of the player whose level is being checked.
+     * @return {@code true} if the player is at the maximum level, {@code false} otherwise.
+     */
+    public boolean isMaxLevel(UUID id) {
+        return getLevel(id) >= LevelingUtil.computeMaxLevel();
+    }
+
     public void addLevel(UUID id, int level) {
         if (level == 0) {
             return;
@@ -187,7 +197,7 @@ public class LevelServiceImpl {
         var data = get(id);
         var oldLevel = getLevel(id);
 
-        if (oldLevel == LevelingUtil.computeMaxLevel()) {
+        if (isMaxLevel(id)) {
             setDataXP(data, formula.getXpForLevel(oldLevel));
             return;
         }
