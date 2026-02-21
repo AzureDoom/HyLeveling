@@ -30,7 +30,7 @@ public class PartyProCompat {
         var cfg = config.get();
         var party = PartyProAPI.getInstance().getPartyByPlayer(playerUuid);
         if (party == null || !cfg.isEnablePartyPluginXPShareCompat()) {
-            if (!cfg.isDisableXPGainNotification()) {
+            if (!cfg.isDisableXPGainNotification() && !levelService.isMaxLevel(playerUuid)) {
                 NotificationsUtil.sendXPGainNotification(playerRef, xp);
             }
             levelService.addXp(playerUuid, xp);
@@ -100,7 +100,7 @@ public class PartyProCompat {
 
             var player = Universe.get().getPlayer(uuid);
 
-            if (!cfg.isDisableXPGainNotification()) {
+            if (!cfg.isDisableXPGainNotification() && !levelService.isMaxLevel(uuid)) {
                 if (player != null) {
                     NotificationsUtil.sendXPGainNotification(
                         player,

@@ -7,6 +7,7 @@ import com.azuredoom.levelingcore.database.JdbcLevelRepository;
 import com.azuredoom.levelingcore.level.formulas.LevelFormula;
 import com.azuredoom.levelingcore.listeners.*;
 import com.azuredoom.levelingcore.playerdata.PlayerLevelData;
+import com.azuredoom.levelingcore.utils.LevelingUtil;
 
 /**
  * Used for managing player levels and experience points (XP). This class provides methods to retrieve, modify, and
@@ -81,6 +82,16 @@ public class LevelServiceImpl {
      */
     public int getLevel(UUID id) {
         return formula.getLevelForXp(get(id).getXp());
+    }
+
+    /**
+     * Checks if a player has reached the maximum level based on their current experience points (XP).
+     *
+     * @param id The unique identifier (UUID) of the player whose level is being checked.
+     * @return {@code true} if the player is at the maximum level, {@code false} otherwise.
+     */
+    public boolean isMaxLevel(UUID id) {
+        return getLevel(id) >= LevelingUtil.computeMaxLevel();
     }
 
     public void addLevel(UUID id, int level) {
@@ -185,6 +196,11 @@ public class LevelServiceImpl {
     public void addXp(UUID id, long amount) {
         var data = get(id);
         var oldLevel = getLevel(id);
+
+        if (isMaxLevel(id)) {
+            setDataXP(data, formula.getXpForLevel(oldLevel));
+            return;
+        }
 
         setDataXP(data, data.getXp() + amount);
 
