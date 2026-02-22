@@ -1,3 +1,7 @@
+v0.9.7hf
+- Added max level check on base xp gain logic from commands. — Huge thanks to GlobalHive for this feature!
+- Fixed a crash on chunk access. — Huge thanks to GlobalHive for this fix!
+
 v0.9.7 
 - Added a mob leveling override mapping support for fixed mob levels. — Huge thanks to GlobalHive for this feature!
 - Added a level variance config option to allow for mob leveling to be more random. — Huge thanks to GlobalHive for this feature!
