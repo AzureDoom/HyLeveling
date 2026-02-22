@@ -1,4 +1,4 @@
-v0.9.7hf
+v0.9.8
 - Added max level check on base xp gain logic from commands. — Huge thanks to GlobalHive for this feature!
 - Fixed a crash on chunk access. — Huge thanks to GlobalHive for this fix!
 
